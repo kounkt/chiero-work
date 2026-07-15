@@ -138,23 +138,23 @@ chiero.jp では意図的に置かなかった。その理由（原文）：
 
 ---
 
-## 7. 公開状況（2026-07-15 完了・DNSのみ未了）
+## 7. 公開状況（2026-07-15 **完了**）
 
 | # | 手順 | 状態 |
 |---|---|---|
 | 1 | 3つの事実を反映 | ✅ |
 | 2 | `tools/gate.py` 40項目 | ✅ 全通過 |
 | 3 | `kounkt/chiero-work` 作成・push | ✅ |
-| 4 | GitHub Pages 有効化 | ✅ **https://kounkt.github.io/chiero-work/ で稼働中** |
-| 5 | **Xserver DNS に1行追加** | ⏸ **任意**（下記）。本人「一般公開できてるならこれで問題ないかも」＝github.io運用も可 |
-| 6 | CNAMEファイル設置 | ⏸ **DNSの後**（先に置くと301ループで到達不能。同日に事故済み） |
-| 7 | chiero.jp 事業02からリンク | ⏸ DNSの後 |
+| 4 | GitHub Pages 有効化 | ✅ **https://work.chiero.jp/ で稼働中**（HTTPS・http→https 301） |
+| 5 | **Xserver DNS に1行追加** | ✅ `work.chiero.jp CNAME kounkt.github.io`。既存14レコードは無傷 |
+| 6 | CNAMEファイル設置 | ✅ 5台伝播確認**後**に設置。HTTPS強制も有効 |
+| 7 | chiero.jp 事業02からリンク | ✅ 「条件とご依頼 →」1本。llms.txtも更新 |
 
 内部リンクは**相対パス**にしてあるので、DNS前の `kounkt.github.io/chiero-work/` でも特商法に到達できる（価格を出した面から法定表記が404、という状態を作らないため）。
 
-### 未了：DNS（AIには実行不可）
+### DNS（完了）
 
-Xserverのセッションが切れておりログイン画面に飛ぶ。**パスワード入力はAIの禁止行為**のため、ここで停止した。本人の操作が要る。
+本人がログインしたうえで、私がサーバーパネルから追加した。**入口のURLを間違えていたのが停滞の原因**——`/xapanel/xserver/server/dns/index` は「ご利用いただけないページです」を返す。正しくは **アカウントパネル `/xapanel/xserver/index` → サーバー管理 → ドメイン → DNSレコード設定**（`/svpanel/xserver/kounkt.xsrv.jp/domain/dns`）。ログイン切れと混同しないこと。
 
 **Xserverサーバーパネル → DNSレコード設定 → chiero.jp → 「DNSレコード追加」タブ**
 
