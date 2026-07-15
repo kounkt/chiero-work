@@ -12,8 +12,14 @@
 <meta property="og:url" content="https://work.chiero.jp/">
 <meta property="og:site_name" content="株式会社CHIERO">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="https://chiero.jp/assets/favicon.svg">
+<meta property="og:image" content="https://work.chiero.jp/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://work.chiero.jp/assets/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","@id":"https://chiero.jp/#org","name":"株式会社CHIERO","url":"https://chiero.jp/",
@@ -50,6 +56,8 @@ em{font-style:normal}
 
 /* ① 理想 */
 .hero{padding:104px 0 76px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;
+  letter-spacing:.08em;padding:6px 14px;border-radius:2px;margin-bottom:28px}
 h1{font-family:var(--m);font-size:clamp(38px,8vw,62px);line-height:1.28;letter-spacing:.02em;font-weight:600}
 h1 .r{color:var(--red)}
 .lead{margin-top:34px;font-size:17px;color:var(--sub);max-width:36em}
@@ -187,6 +195,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
 
 <!-- ① 理想の提示 -->
 <div class="hero"><div class="wrap">
+  <p class="eyebrow">経営者・事業主のための顧問（相談役）</p>
   <h1>また、<br><span class="r">流れはじめる。</span></h1>
   <p class="lead">
     決めるのに、時間がかからない。迷ったら、話せる相手がいる。<br>
@@ -227,6 +236,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
   <p class="note">顧問（相談役）です</p>
   <div class="body">
     <p><b>月に一度、90分。あなたの判断の隣に座ります。</b>その月にいちばん詰まっているものを持ってきてください。二人で、引っかかっている一点を探します。契約期間中は、LINEでいつでも投げていただけます。回数の制限はありません。</p>
+    <p>新しく始めた商品ではありません。<b>いま続いている顧問契約と同じ形</b>で、枠を開けるものです。あなたが最初の一人ではない、ということです。</p>
     <p>答えはお渡ししません。<b>渡された答えは、あなたの中で流れないからです。</b>かわりに、あなたがもう持っている答えが、なぜ出てこないのかを見ます。出てくるようになれば、次からは私がいなくても決まります。</p>
     <p>そして、<b>「やめたほうがいい」と言ってもらえる場所ができます。</b>私はあなたに何も売りません。自分の資本で投資と研究開発をしていて、外部資金も受けていないので、あなたが何を決めても私の損得は動きません。<b>利害のない相手が、一人もいない</b>——それが、経営者からいちばん多く聞く詰まりです。</p>
   </div>
@@ -273,7 +283,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     </div>
     <div class="as-card">
       <h3>話した内容は、どこにも出しません</h3>
-      <p>お名前も、会社名も、事例としても出しません。<b>このページに「お客様の声」が一つも載っていないのは、そのためです。</b>載せない相手だから、話せることがあります。</p>
+      <p>お名前も、会社名も、事例としても出しません。<b>このページに「お客様の声」が一つも載っていないのは、そのためです。</b>載せない相手だから、話せることがあります。ご希望があれば<b>秘密保持契約（NDA）</b>を結びます。</p>
     </div>
     <div class="as-card">
       <h3>条件を、全部このページに出しています</h3>
@@ -323,7 +333,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <div class="step"><h3>お申し込み</h3>
       <p>下のボタンからご連絡ください。いま抱えている詰まりを、一行で結構ですのでお書き添えください。</p></div>
     <div class="step"><h3>初回相談 90分（50,000円）</h3>
-      <p>オンラインで話します。この90分で詰まりが取れて終わったなら、それがいちばん良い結果です。</p></div>
+      <p>オンラインで話します。前半で、事業とあなたの流れを一枚に描きます。後半で、詰まりの候補を一緒に特定します。この90分で詰まりが取れて終わったなら、それがいちばん良い結果です。</p></div>
     <div class="step"><h3>持ち帰る</h3>
       <p><b>その場では契約しません。</b>後日あらためてメールでご案内します。会わないという判断も、同じだけ正しい判断です。</p></div>
     <div class="step"><h3>顧問契約（3ヶ月）</h3>
@@ -335,6 +345,9 @@ footer .c{margin-top:16px;letter-spacing:.06em}
 <section id="faq"><div class="wrap">
   <h2>先に、答えておきます。</h2>
   <p class="note">聞かれる前に</p>
+
+  <details><summary>なぜ、初回相談が有料なのですか。</summary>
+    <p class="a">無料相談は、営業の入口になりやすいからです。無料で会えば、こちらはその90分を回収するために<b>売る側に回ります</b>。有料でお受けするから、90分をあなたの詰まりを取ることだけに使えますし、<b>「やめたほうがいい」も言えます</b>。お金を払っていただくことが、私が営業をしないための仕組みです。</p></details>
 
   <details><summary>初回相談の90分だけで終わっても大丈夫ですか。</summary>
     <p class="a">大丈夫です。<b>初回相談は顧問契約の前提ではありません。</b>90分で詰まりが取れたなら、それがいちばん良い結果です。こちらから追いかけるご連絡もしません。</p></details>
@@ -355,7 +368,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <p class="a"><b>ありません。</b>3ヶ月分の枠をお預かりして、その間ほかの方をお断りするためです。だから初回相談を先に置いていますし、その場で契約しない時間も取っています。<a class="ln" href="tokushoho/">特定商取引法に基づく表記</a>に明記しています。</p></details>
 
   <details><summary>話した内容が外に出ることはありますか。</summary>
-    <p class="a">ありません。<b>お名前も、会社名も、事例としても出しません。</b>このページに「お客様の声」が一つも載っていないのは、そのためです。</p></details>
+    <p class="a">ありません。<b>お名前も、会社名も、事例としても出しません。</b>このページに「お客様の声」が一つも載っていないのは、そのためです。<b>ご希望があれば、秘密保持契約（NDA）を結びます。</b></p></details>
 
   <details><summary>分割は何回まで可能ですか。</summary>
     <p class="a"><b>最大24回</b>までご利用いただけます。クレジットカード決済に対応しています。分割手数料はお客様のご負担になります。</p></details>
@@ -386,9 +399,18 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <span>著書200冊超</span><span>株式会社CHIERO 代表取締役</span><span>法人番号 7290001091210</span>
   </div>
   <p class="body" style="margin-top:26px;font-size:14.5px">
-    会社・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。
-    考えていることは隠さない主義なので、<a class="ln" href="https://note.com/kounkt">note</a> にほぼ毎日書いています。読んでから決めてください。
+    会社・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。法人番号で登記も照合できます。
   </p>
+</div></section>
+
+<!-- 逆選抜（読んでから決めてもらう） -->
+<section id="read"><div class="wrap">
+  <h2>決める前に、読んでください。</h2>
+  <p class="note">合わない人に来てほしくないので</p>
+  <div class="body">
+    <p><b>考えていることは、全部公開しています。</b>顧問でお話しするのと同じ頭の中身を、<a class="ln" href="https://note.com/kounkt">note</a> にほぼ毎日書いています。何を面白いと思い、何を捨てる人間なのかは、そこを読めばだいたい分かります。</p>
+    <p><b>まず読んでみて、合わないと感じたら申し込まないでください。</b>90分と50,000円を使ってから合わないと分かるより、そのほうがお互いに良いはずです。</p>
+  </div>
 </div></section>
 
 <!-- ⑤ 最後の一押し -->
@@ -398,9 +420,13 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     合うかどうかは、話せばわかります。<br>
     <b>その90分で終わっても構いません。</b>いま抱えている詰まりを、一行で結構です。
   </p>
-  <a class="btn" href="mailto:chieropiero@gmail.com?subject=%E5%88%9D%E5%9B%9E%E7%9B%B8%E8%AB%87%E3%81%AE%E4%BB%B6&amp;body=%E3%81%84%E3%81%BE%E6%8A%B1%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E8%A9%B0%E3%81%BE%E3%82%8A%EF%BC%88%E4%B8%80%E8%A1%8C%E3%81%A7%E7%B5%90%E6%A7%8B%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E4%BC%9A%E7%A4%BE%E5%90%8D%EF%BC%9A%0A">初回相談を申し込む（50,000円）</a>
-  <span class="alt">または <a href="https://lin.ee/YCCoRsBu">公式LINE</a> から</span>
+  <a class="btn" href="https://lin.ee/YCCoRsBu">公式LINEで初回相談を申し込む</a>
+  <span class="alt">
+    メールでも受け付けています —
+    <a href="mailto:chieropiero@gmail.com?subject=%E5%88%9D%E5%9B%9E%E7%9B%B8%E8%AB%87%E3%81%AE%E4%BB%B6&amp;body=%E3%81%84%E3%81%BE%E6%8A%B1%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E8%A9%B0%E3%81%BE%E3%82%8A%EF%BC%88%E4%B8%80%E8%A1%8C%E3%81%A7%E7%B5%90%E6%A7%8B%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E4%BC%9A%E7%A4%BE%E5%90%8D%EF%BC%9A%0A">chieropiero@gmail.com</a>
+  </span>
   <small>
+    初回相談は90分・50,000円（税込）です。<br>
     顧問枠には上限があります。空きがない場合はその旨をお返しします。<br>
     3営業日以内に返信します。その場で契約のお話はしません。
   </small>

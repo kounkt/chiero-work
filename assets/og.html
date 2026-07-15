@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><style>
+/* work.chiero.jp の og:image 生成用。1200×630。chiero_site/assets/og.html と同じ作法。
+   chrome-headless-shell --window-size=1200,630 --screenshot で焼く。 */
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#fff;position:relative;overflow:hidden;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif}
+.slope{position:absolute;left:-60px;top:0;width:1320px;height:630px}
+.slope line{stroke:#F2F2F0;stroke-width:2}
+.dot{position:absolute;border-radius:50%;background:#E60012}
+.wrap{position:absolute;inset:0;padding:84px 88px;display:flex;flex-direction:column;
+  justify-content:space-between}
+.logo{font-weight:700;letter-spacing:.18em;font-size:22px;color:#0E0E0E}
+.logo b{color:#E60012}
+h1{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:104px;font-weight:600;
+  line-height:1.22;letter-spacing:.02em;color:#0E0E0E}
+h1 .r{color:#E60012}
+.foot{display:flex;align-items:center;gap:26px;font-size:19px;color:#565656}
+.foot b{color:#0E0E0E;font-weight:600}
+.bar{width:64px;height:3px;background:#E60012}
+</style></head><body>
+
+<svg class="slope" viewBox="0 0 1320 630">
+  <line x1="0" y1="560" x2="1320" y2="150"/>
+  <line x1="0" y1="610" x2="1320" y2="200"/>
+  <line x1="0" y1="510" x2="1320" y2="100"/>
+</svg>
+<div class="dot" style="left:262px;top:436px;width:15px;height:15px;opacity:.32"></div>
+<div class="dot" style="left:492px;top:364px;width:19px;height:19px;opacity:.58"></div>
+<div class="dot" style="left:742px;top:286px;width:24px;height:24px"></div>
+<div class="dot" style="left:1012px;top:202px;width:15px;height:15px;opacity:.3"></div>
+
+<div class="wrap">
+  <div class="logo">CHIER<b>O</b></div>
+  <h1>詰まりを、<br><span class="r">取る。</span></h1>
+  <div class="foot">
+    <span class="bar"></span>
+    <span><b>経営者・事業主のための顧問（相談役）</b>　月1回90分＋LINE無制限</span>
+  </div>
+</div>
+
+</body></html>

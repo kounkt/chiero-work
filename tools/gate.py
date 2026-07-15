@@ -135,9 +135,21 @@ if "15条の3" in TK or "法定返品権" in TK:
         "法定返品権が役務に適用されない旨を正しく書いている")
 
 # ── 8. リンク切れ ───────────────────────────────────
-for href in set(re.findall(r'href="(/[^"#]*)"', LP + TK)):
-    p = ROOT / href.strip("/") / "index.html" if not href.endswith((".html", ".txt")) else ROOT / href.strip("/")
-    chk(p.exists() or href == "/", f"内部リンク {href}", "リンク先が無い")
+# 相対リンク（../）は、その href が書かれているファイルの位置から解決する。
+# ROOT基準で見ると特商法の「../」を誤検知する。
+# 拡張子つき（favicon.svg 等）は実ファイル、拡張子なしはディレクトリ＋index.html。
+for src, base in ((LP, ROOT), (TK, ROOT / "tokushoho")):
+    for href in set(re.findall(r'href="((?!https?:|mailto:|#)[^"#]+)"', src)):
+        p = (ROOT / href.lstrip("/")) if href.startswith("/") else (base / href)
+        p = p if pathlib.Path(href).suffix else p / "index.html"
+        where = base.name or "/"
+        chk(p.resolve().exists(), f"内部リンク {href}（{where}から）", f"リンク先が無い: {p}")
+
+# ── 9. アイコンとog画像の実在（Chromeでアイコンが出ない事故の再発防止）──
+for f in ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "assets/og.png"]:
+    chk((ROOT / f).exists(), f"{f} が存在する", "参照だけあって実体が無いと静かに壊れる")
+chk('rel="icon"' in LP and 'rel="icon"' in TK, "faviconがLPと特商法の両方で参照されている")
+chk("summary_large_image" in LP and "og:image" in LP, "og:imageとlarge_imageカードがある（共有時の見え方）")
 
 print("=" * 60)
 print(f"✅ {len(ok)} 件")

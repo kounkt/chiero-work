@@ -1,0 +1,35 @@
+# work.chiero.jp — 顧問（相談役）のご依頼
+
+User-agent: *
+Allow: /
+
+# AI検索・LLMクローラー: 明示的に許可する。
+# 顧問の条件と価格は llms.txt に正典を置いている。
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://work.chiero.jp/sitemap.xml
