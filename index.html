@@ -4,15 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>顧問（相談役）のご依頼 | 株式会社CHIERO</title>
-<meta name="description" content="株式会社CHIERO・チエロ（中田光）への顧問のご依頼窓口です。月1回90分、3ヶ月の顧問契約。初回90分のセッションからはじまります。条件と価格をすべて掲載しています。">
+<meta name="description" content="株式会社CHIERO・チエロ（中田光）への顧問のご依頼窓口。月1回90分、3ヶ月の顧問契約と、初回90分のセッション。詰まりは能力の問題ではなく、流れの問題です。条件と価格をすべて掲載しています。">
 <link rel="canonical" href="https://work.chiero.jp/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="顧問（相談役）のご依頼 | 株式会社CHIERO">
-<meta property="og:description" content="月1回90分、3ヶ月の顧問契約。条件と価格をすべて掲載しています。">
+<meta property="og:description" content="詰まりは、能力の問題ではありません。流れの問題です。月1回90分、3ヶ月の顧問契約。">
 <meta property="og:url" content="https://work.chiero.jp/">
 <meta property="og:site_name" content="株式会社CHIERO">
+<meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="https://chiero.jp/assets/favicon.svg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://chiero.jp/#org","name":"株式会社CHIERO","url":"https://chiero.jp/",
+ "telephone":"+81-70-8336-0789","email":"chinropiero@gmail.com",
+ "address":{"@type":"PostalAddress","addressCountry":"JP","postalCode":"810-0021","addressRegion":"福岡県","addressLocality":"福岡市中央区","streetAddress":"今泉1丁目3-23 セルクル今泉404号室"}},
+{"@type":"Person","@id":"https://chiero.jp/#chiero","name":"チエロ","alternateName":"中田 光","jobTitle":"代表取締役","worksFor":{"@id":"https://chiero.jp/#org"}},
+{"@type":"Service","name":"顧問（相談役）","provider":{"@id":"https://chiero.jp/#org"},"serviceType":"経営者の意思決定への伴走","areaServed":"JP",
+ "offers":[{"@type":"Offer","name":"初回セッション（90分）","price":"50000","priceCurrency":"JPY"},
+           {"@type":"Offer","name":"顧問契約（3ヶ月・月1回90分）","price":"1100000","priceCurrency":"JPY"}]}
+]}
+</script>
 <style>
 :root{
   --red:#E60012; --red-d:#B8000E; --ink:#0E0E0E; --sub:#565656; --faint:#8E8E8E;
@@ -23,60 +35,102 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--g);color:var(--ink);background:var(--paper);line-height:1.9;
   -webkit-font-smoothing:antialiased;font-size:16px}
-.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
 a{color:inherit}
+em{font-style:normal}
 
 /* header */
 .hd{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.94);
-  backdrop-filter:blur(8px);z-index:10}
+  backdrop-filter:blur(8px);z-index:20}
 .hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
 .logo{font-weight:700;letter-spacing:.14em;font-size:14px;text-decoration:none}
 .logo b{color:var(--red)}
 .hd nav a{font-size:13px;color:var(--sub);text-decoration:none;margin-left:20px}
 .hd nav a:hover{color:var(--red)}
+@media(max-width:480px){.hd nav a:not(:last-child){display:none}}
 
 /* hero */
-.hero{padding:92px 0 64px;border-bottom:1px solid var(--line)}
-h1{font-family:var(--m);font-size:clamp(38px,8vw,64px);line-height:1.25;letter-spacing:.02em;
-  font-weight:600}
+.hero{padding:100px 0 72px;border-bottom:1px solid var(--line)}
+h1{font-family:var(--m);font-size:clamp(40px,8.4vw,66px);line-height:1.24;letter-spacing:.02em;font-weight:600}
 h1 .r{color:var(--red)}
-.lead{margin-top:32px;font-size:17px;color:var(--sub);max-width:34em}
+.lead{margin-top:34px;font-size:17px;color:var(--sub);max-width:34em}
 .lead b{color:var(--ink);font-weight:600}
 
-/* sections */
-section{padding:64px 0;border-bottom:1px solid var(--line)}
-h2{font-family:var(--m);font-size:26px;font-weight:600;letter-spacing:.04em;margin-bottom:8px}
+/* section shell */
+section{padding:76px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--m);font-size:min(27px,5.6vw);font-weight:600;letter-spacing:.04em;line-height:1.6}
 h2::before{content:"";display:inline-block;width:22px;height:2px;background:var(--red);
-  vertical-align:middle;margin-right:12px;transform:translateY(-4px)}
-.note{font-size:13px;color:var(--faint);margin-bottom:32px;padding-left:34px}
-p+p{margin-top:1.2em}
+  vertical-align:middle;margin-right:12px;transform:translateY(-5px)}
+.note{font-size:13px;color:var(--faint);margin:8px 0 36px;padding-left:34px}
 .body{font-size:16px;color:var(--sub)}
 .body b{color:var(--ink);font-weight:600}
+p+p{margin-top:1.2em}
+
+/* 詰まりチェック */
+.pain{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px}
+@media(max-width:640px){.pain{grid-template-columns:1fr}}
+.pain-item{display:flex;gap:13px;align-items:flex-start}
+.pain-item .check{flex:none;width:25px;height:25px;border-radius:50%;background:var(--red);color:#fff;
+  display:grid;place-items:center;font-size:13px;font-weight:700;margin-top:5px}
+.pain-item p{font-size:15.5px;font-weight:600;line-height:1.8}
+.pain-close{margin-top:48px;padding-top:40px;border-top:1px solid var(--line)}
+.pain-close p{font-family:var(--m);font-size:min(25px,5.2vw);font-weight:600;line-height:1.85}
+.pain-close em{background:linear-gradient(transparent 62%,#FFD9DC 62%)}
+.pain-close .s{font-family:var(--g);font-size:15px;font-weight:400;color:var(--sub);margin-top:20px;line-height:1.9}
+
+/* 三行定義（黒） */
+.define{background:var(--ink);color:#fff;border:0;text-align:center;padding:88px 0}
+.define-head{font-family:var(--m);font-size:min(23px,4.8vw);font-weight:600;line-height:1.85;margin-bottom:60px}
+.define-head em{color:#F09595;font-size:.6em;display:block;letter-spacing:.25em;margin-bottom:16px;
+  font-family:var(--g);font-weight:700}
+.define-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+@media(max-width:640px){.define-grid{grid-template-columns:1fr;gap:44px}
+  .define-cell+.define-cell{border-left:0!important;border-top:1px solid #3a3a3a;padding-top:44px}}
+.define-cell{padding:8px 18px}
+.define-cell+.define-cell{border-left:1px solid #3a3a3a}
+.define-cell .no{font-family:var(--m);color:#666;font-size:13px;letter-spacing:.35em;margin-bottom:20px}
+.define-cell .label{color:#bbb;font-size:13px;font-weight:600;letter-spacing:.1em;margin-bottom:12px}
+.define-cell .word{font-family:var(--m);font-size:min(36px,7vw);font-weight:600;line-height:1.3;color:#fff;
+  position:relative;display:inline-block;white-space:nowrap}
+/* 文字の上に重ねるマーカー。z-index:-1 にすると .define の黒背景の裏へ回って消える */
+.define-cell .word::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.02em;height:.28em;
+  background:var(--red);opacity:.55;z-index:0}
+.define-cell .suffix{font-size:13.5px;color:#888;margin-top:18px;line-height:1.85}
+.define-note{color:#888;font-size:14.5px;margin-top:60px}
+.define-note b{color:#fff;font-weight:700}
 
 /* 条件表 */
-.terms{border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+.terms{border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .trow{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line)}
 .trow:last-child{border-bottom:0}
-.trow dt{background:var(--alt);padding:16px 18px;font-size:13px;font-weight:600;color:var(--sub);
-  letter-spacing:.04em}
+.trow dt{background:var(--alt);padding:16px 18px;font-size:13px;font-weight:600;color:var(--sub);letter-spacing:.04em}
 .trow dd{padding:16px 18px;font-size:15px}
-.trow dd small{display:block;color:var(--faint);font-size:12.5px;line-height:1.7;margin-top:4px}
-.price{font-family:var(--m);font-size:23px;font-weight:600;letter-spacing:.02em}
-.price .u{font-size:13px;color:var(--faint);font-family:var(--g);margin-left:4px;letter-spacing:0}
+.trow dd small{display:block;color:var(--faint);font-size:12.5px;line-height:1.75;margin-top:5px}
+.price{font-family:var(--m);font-size:24px;font-weight:600;letter-spacing:.02em}
+.price .u{font-size:13px;color:var(--faint);font-family:var(--g);margin-left:5px;letter-spacing:0}
 @media(max-width:560px){.trow{grid-template-columns:1fr}
-  .trow dt{padding:12px 16px 4px;background:transparent}
+  .trow dt{padding:12px 16px 4px;background:transparent;color:var(--red)}
   .trow dd{padding:0 16px 16px}}
 
-/* 流れ */
-.steps{counter-reset:s;margin-top:8px}
-.step{counter-increment:s;position:relative;padding:0 0 28px 46px;border-left:1px solid var(--line);
-  margin-left:13px}
+/* 進め方 */
+.steps{counter-reset:s}
+.step{counter-increment:s;position:relative;padding:0 0 30px 46px;border-left:1px solid var(--line);margin-left:13px}
 .step:last-child{border-left-color:transparent;padding-bottom:0}
-.step::before{content:counter(s);position:absolute;left:-13px;top:0;width:26px;height:26px;
-  border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;
-  display:grid;place-items:center;font-family:var(--g)}
-.step h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.step::before{content:counter(s);position:absolute;left:-13px;top:0;width:26px;height:26px;border-radius:50%;
+  background:var(--red);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+.step h3{font-size:16.5px;font-weight:600;margin-bottom:5px}
 .step p{font-size:14.5px;color:var(--sub)}
+.step p b{color:var(--ink)}
+
+/* FAQ */
+details{border-bottom:1px solid var(--line)}
+details summary{padding:19px 34px 19px 0;font-size:15.5px;font-weight:600;cursor:pointer;list-style:none;
+  position:relative}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"＋";position:absolute;right:4px;top:19px;color:var(--red);font-weight:700}
+details[open] summary::after{content:"−"}
+details .a{padding:0 0 22px;font-size:14.5px;color:var(--sub)}
+details .a b{color:var(--ink)}
 
 /* 向いていない */
 .no li{list-style:none;padding:14px 0 14px 30px;border-bottom:1px dashed var(--line);position:relative;
@@ -86,23 +140,23 @@ p+p{margin-top:1.2em}
 .no li b{color:var(--ink);font-weight:600}
 
 /* 事実 */
-.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-.facts span{border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:13px;
-  color:var(--sub)}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.facts span{border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:13px;color:var(--sub)}
+.ln{color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
 
 /* CTA */
-.cta{background:var(--ink);color:#fff;padding:72px 0;border:0;text-align:center}
-.cta h2{color:#fff}
+.cta{background:var(--ink);color:#fff;padding:84px 0;border:0;text-align:center}
+.cta h2{color:#fff;font-size:min(27px,5.6vw)}
 .cta h2::before{display:none}
-.cta p{color:#B5B5B5;font-size:15px;margin-top:14px}
-.btn{display:inline-block;margin-top:30px;background:var(--red);color:#fff;text-decoration:none;
-  padding:17px 44px;border-radius:3px;font-weight:700;font-size:15.5px;letter-spacing:.06em;
-  transition:background .2s}
+.cta p{color:#B5B5B5;font-size:15px;margin-top:16px}
+.btn{display:inline-block;margin-top:32px;background:var(--red);color:#fff;text-decoration:none;
+  padding:18px 46px;border-radius:3px;font-weight:700;font-size:15.5px;letter-spacing:.06em;transition:background .2s}
 .btn:hover{background:var(--red-d)}
-.cta small{display:block;margin-top:20px;color:#8A8A8A;font-size:12.5px;line-height:1.8}
+.cta .alt{display:block;margin-top:20px;font-size:13.5px;color:#9A9A9A}
+.cta .alt a{color:#DDD}
+.cta small{display:block;margin-top:26px;color:#8A8A8A;font-size:12.5px;line-height:1.85}
 
-/* footer */
-footer{padding:40px 0;font-size:12.5px;color:var(--faint);text-align:center}
+footer{padding:44px 0;font-size:12.5px;color:var(--faint);text-align:center}
 footer a{color:var(--sub);margin:0 9px;text-decoration:none}
 footer a:hover{color:var(--red)}
 footer .c{margin-top:16px;letter-spacing:.06em}
@@ -113,9 +167,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
 <header class="hd"><div class="wrap">
   <a class="logo" href="https://chiero.jp/">CHIER<b>O</b></a>
   <nav>
-    <a href="#terms">条件</a>
-    <a href="#flow">進め方</a>
-    <a href="#apply">申し込む</a>
+    <a href="#terms">条件</a><a href="#flow">進め方</a><a href="#faq">よくある質問</a><a href="#apply">申し込む</a>
   </nav>
 </div></header>
 
@@ -127,13 +179,55 @@ footer .c{margin-top:16px;letter-spacing:.06em}
   </p>
 </div></div>
 
+<section id="pain"><div class="wrap">
+  <h2>こんな「詰まり」、ありませんか。</h2>
+  <p class="note">ひとつでも当てはまるなら、話す価値があります</p>
+  <div class="pain">
+    <div class="pain-item"><div class="check">✓</div><p>成果は出ている。でも、次にどこへ張るかが決まらない。</p></div>
+    <div class="pain-item"><div class="check">✓</div><p>相談できる相手が、社内の人か、何かを売りたい人しかいない。</p></div>
+    <div class="pain-item"><div class="check">✓</div><p>AIを入れろと言われるが、どこに入れると効くのか判断できない。</p></div>
+    <div class="pain-item"><div class="check">✓</div><p>やめる判断だけが、何ヶ月も先送りになっている。</p></div>
+    <div class="pain-item"><div class="check">✓</div><p>決めたことが、なぜ効いたのか・効かなかったのかを説明できない。</p></div>
+    <div class="pain-item"><div class="check">✓</div><p>情報は集まる。でも、自分の言葉で構造にならない。</p></div>
+  </div>
+  <div class="pain-close">
+    <p>詰まりは、<em>能力の問題ではありません</em>。<br>流れの問題です。</p>
+    <p class="s">
+      流れているものが、どこかで引っかかっている。だから進まない。<br>
+      能力を足す必要はありません。<b>引っかかっている場所を見つけて、外す</b>。それだけで流れは戻ります。
+    </p>
+  </div>
+</div></section>
+
+<section class="define"><div class="wrap">
+  <p class="define-head"><em>CHIERO STYLE</em>やっていることは、三つです。<br>三つで一つです。</p>
+  <div class="define-grid">
+    <div class="define-cell">
+      <p class="no">壱</p><p class="label">まず</p>
+      <p class="word">流れを、見る</p>
+      <p class="suffix">事業も、人も、流れています。<br>どこが速く、どこが淀んでいるか。</p>
+    </div>
+    <div class="define-cell">
+      <p class="no">弐</p><p class="label">つぎに</p>
+      <p class="word">詰まりを、取る</p>
+      <p class="suffix">淀みの原因は、たいてい<br>本人が見えていない一点にあります。</p>
+    </div>
+    <div class="define-cell">
+      <p class="no">参</p><p class="label">そして</p>
+      <p class="word">構造に、変える</p>
+      <p class="suffix">一度取って終わりにしません。<br>詰まらない形にして返します。</p>
+    </div>
+  </div>
+  <p class="define-note">傾きを、<b>構造に変える。</b>——これが株式会社CHIEROのやり方です。</p>
+</div></section>
+
 <section id="what"><div class="wrap">
   <h2>これは何か</h2>
   <p class="note">顧問（相談役）です</p>
   <div class="body">
     <p>経営者の意思決定に、顧問として伴走します。<b>月1回90分</b>。これは新しく作ったものではなく、いま続いている顧問契約と<b>同じ形</b>です。</p>
     <p>答えを渡す関わり方はしません。<b>同じ側に立って、構造を見つける</b>関わり方です。私は自分の資本で判断していて、外部資金は受け入れていません。隣で同じ賭けをしている人間として話します。</p>
-    <p>やり方や手順をお伝えするものではありません。目の前の一つの判断について、詰まっているところを一緒に見ます。</p>
+    <p>だから、利害がありません。何かを売るために話すことはしないので、<b>「やめたほうがいい」と言うべきときは、そう言います</b>。それが言える相手が一人もいない、というのが、いちばん多い詰まりです。</p>
   </div>
 </div></section>
 
@@ -157,6 +251,10 @@ footer .c{margin-top:16px;letter-spacing:.06em}
       銀行振込 / クレジットカード / 分割
       <small>ご請求書をお送りします。分割の回数はご相談ください。</small>
     </dd></div>
+    <div class="trow"><dt>枠</dt><dd>
+      顧問枠には上限があります。
+      <small>月に確保している時間が決まっているためです。空きがない場合は、その旨をお返しします。</small>
+    </dd></div>
   </dl>
 </div></section>
 
@@ -167,12 +265,38 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <div class="step"><h3>お申し込み</h3>
       <p>下のボタンからご連絡ください。いま抱えている詰まりを、一行で結構ですのでお書き添えください。</p></div>
     <div class="step"><h3>初回 90分（50,000円）</h3>
-      <p>オンラインで話します。この90分だけで終わっても構いません。</p></div>
+      <p>オンラインで話します。この90分だけで詰まりが取れて終わっても、それで構いません。</p></div>
     <div class="step"><h3>持ち帰る</h3>
       <p><b>その場では契約しません。</b>後日あらためてメールでご案内します。会わないという判断も、同じだけ正しい判断です。</p></div>
     <div class="step"><h3>顧問契約（3ヶ月）</h3>
       <p>お互いに合うと判断できたときだけ。月1回90分と、LINEでの質問。</p></div>
   </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>先に、答えておきます。</h2>
+  <p class="note">聞かれる前に</p>
+
+  <details><summary>初回の90分だけで終わっても大丈夫ですか。</summary>
+    <p class="a">大丈夫です。<b>初回は顧問契約の前提ではありません。</b>90分で詰まりが取れたなら、それがいちばん良い結果です。こちらから追いかけるご連絡もしません。</p></details>
+
+  <details><summary>業種の知識がなくても話せるのですか。</summary>
+    <p class="a">詰まりは、業種の中ではなく<b>構造の中</b>にあります。業界の正解を持っている人は社内にいます。私が見るのは、その正解がなぜ流れていないのか、のほうです。</p></details>
+
+  <details><summary>LINEの質問は、本当に回数の制限がないのですか。</summary>
+    <p class="a">ありません。契約期間中はいつでも。<b>ただし即レスは約束しません。</b>すぐ返せるものはすぐ返しますが、考えるべきものは考えてから返します。</p></details>
+
+  <details><summary>3ヶ月のあとは、どうなりますか。</summary>
+    <p class="a">終わります。<b>自動更新はしません。</b>続けるかどうかは、そのときにあらためて決めます。3ヶ月で構造が変わっていれば、続ける理由はないはずです。</p></details>
+
+  <details><summary>途中でやめたら、返金はありますか。</summary>
+    <p class="a"><b>ありません。</b>3ヶ月分の枠をお預かりして、他の方をお断りするためです。だから初回の90分を先に置いていますし、その場で契約しない時間も取っています。<a class="ln" href="/tokushoho/">特定商取引法に基づく表記</a>に明記しています。</p></details>
+
+  <details><summary>話した内容が外に出ることはありますか。</summary>
+    <p class="a">ありません。<b>お名前も、会社名も、事例としても出しません。</b>このページに「お客様の声」が一つも載っていないのは、そのためです。</p></details>
+
+  <details><summary>分割は何回まで可能ですか。</summary>
+    <p class="a">ご相談ください。ご事情に合わせて決めます。分割手数料はお客様のご負担になります。</p></details>
 </div></section>
 
 <section id="not"><div class="wrap">
@@ -195,19 +319,19 @@ footer .c{margin-top:16px;letter-spacing:.06em}
   </div>
   <div class="facts">
     <span>投資家</span><span>作家</span><span>一人会社</span>
-    <span>著書200冊超</span><span>株式会社CHIERO 代表取締役</span>
-    <span>法人番号 7290001091210</span>
+    <span>著書200冊超</span><span>株式会社CHIERO 代表取締役</span><span>法人番号 7290001091210</span>
   </div>
-  <p class="body" style="margin-top:24px;font-size:14.5px">
-    会社・実績・著書の詳細は <a href="https://chiero.jp/" style="color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)">chiero.jp</a> をご覧ください。
-    日々考えていることは <a href="https://note.com/kounkt" style="color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)">note</a> にほぼ毎日書いています。
+  <p class="body" style="margin-top:26px;font-size:14.5px">
+    会社・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。
+    考えていることは隠さない主義なので、<a class="ln" href="https://note.com/kounkt">note</a> にほぼ毎日書いています。読んでから決めてください。
   </p>
 </div></section>
 
 <section class="cta" id="apply"><div class="wrap">
-  <h2>お申し込み</h2>
-  <p>まず、初回の90分から。</p>
-  <a class="btn" href="mailto:CONTACT_EMAIL?subject=%E9%A1%A7%E5%95%8F%E3%81%AE%E4%BB%B6&amp;body=%E3%81%84%E3%81%BE%E6%8A%B1%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E8%A9%B0%E3%81%BE%E3%82%8A%EF%BC%88%E4%B8%80%E8%A1%8C%E3%81%A7%E7%B5%90%E6%A7%8B%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E4%BC%9A%E7%A4%BE%E5%90%8D%EF%BC%9A%0A">メールで申し込む</a>
+  <h2>まず、初回の90分から。</h2>
+  <p>いま抱えている詰まりを、一行で結構です。</p>
+  <a class="btn" href="mailto:chinropiero@gmail.com?subject=%E9%A1%A7%E5%95%8F%E3%81%AE%E4%BB%B6&amp;body=%E3%81%84%E3%81%BE%E6%8A%B1%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E8%A9%B0%E3%81%BE%E3%82%8A%EF%BC%88%E4%B8%80%E8%A1%8C%E3%81%A7%E7%B5%90%E6%A7%8B%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E4%BC%9A%E7%A4%BE%E5%90%8D%EF%BC%9A%0A">メールで申し込む</a>
+  <span class="alt">または <a href="https://lin.ee/YCCoRsBu">公式LINE</a> から</span>
   <small>
     顧問枠には上限があります。空きがない場合はその旨をお返しします。<br>
     3営業日以内に返信します。
