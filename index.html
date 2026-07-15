@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>顧問（相談役）のご依頼 | 株式会社CHIERO</title>
+<meta name="description" content="株式会社CHIERO・チエロ（中田光）への顧問のご依頼窓口です。月1回90分、3ヶ月の顧問契約。初回90分のセッションからはじまります。条件と価格をすべて掲載しています。">
+<link rel="canonical" href="https://work.chiero.jp/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="顧問（相談役）のご依頼 | 株式会社CHIERO">
+<meta property="og:description" content="月1回90分、3ヶ月の顧問契約。条件と価格をすべて掲載しています。">
+<meta property="og:url" content="https://work.chiero.jp/">
+<meta property="og:site_name" content="株式会社CHIERO">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="https://chiero.jp/assets/favicon.svg">
+<style>
+:root{
+  --red:#E60012; --red-d:#B8000E; --ink:#0E0E0E; --sub:#565656; --faint:#8E8E8E;
+  --paper:#FFFFFF; --alt:#F7F6F3; --line:#E5E3DE;
+  --g:"Hiragino Sans","Yu Gothic Medium","Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
+  --m:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--g);color:var(--ink);background:var(--paper);line-height:1.9;
+  -webkit-font-smoothing:antialiased;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* header */
+.hd{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);z-index:10}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:700;letter-spacing:.14em;font-size:14px;text-decoration:none}
+.logo b{color:var(--red)}
+.hd nav a{font-size:13px;color:var(--sub);text-decoration:none;margin-left:20px}
+.hd nav a:hover{color:var(--red)}
+
+/* hero */
+.hero{padding:92px 0 64px;border-bottom:1px solid var(--line)}
+h1{font-family:var(--m);font-size:clamp(38px,8vw,64px);line-height:1.25;letter-spacing:.02em;
+  font-weight:600}
+h1 .r{color:var(--red)}
+.lead{margin-top:32px;font-size:17px;color:var(--sub);max-width:34em}
+.lead b{color:var(--ink);font-weight:600}
+
+/* sections */
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--m);font-size:26px;font-weight:600;letter-spacing:.04em;margin-bottom:8px}
+h2::before{content:"";display:inline-block;width:22px;height:2px;background:var(--red);
+  vertical-align:middle;margin-right:12px;transform:translateY(-4px)}
+.note{font-size:13px;color:var(--faint);margin-bottom:32px;padding-left:34px}
+p+p{margin-top:1.2em}
+.body{font-size:16px;color:var(--sub)}
+.body b{color:var(--ink);font-weight:600}
+
+/* 条件表 */
+.terms{border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+.trow{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.trow dt{background:var(--alt);padding:16px 18px;font-size:13px;font-weight:600;color:var(--sub);
+  letter-spacing:.04em}
+.trow dd{padding:16px 18px;font-size:15px}
+.trow dd small{display:block;color:var(--faint);font-size:12.5px;line-height:1.7;margin-top:4px}
+.price{font-family:var(--m);font-size:23px;font-weight:600;letter-spacing:.02em}
+.price .u{font-size:13px;color:var(--faint);font-family:var(--g);margin-left:4px;letter-spacing:0}
+@media(max-width:560px){.trow{grid-template-columns:1fr}
+  .trow dt{padding:12px 16px 4px;background:transparent}
+  .trow dd{padding:0 16px 16px}}
+
+/* 流れ */
+.steps{counter-reset:s;margin-top:8px}
+.step{counter-increment:s;position:relative;padding:0 0 28px 46px;border-left:1px solid var(--line);
+  margin-left:13px}
+.step:last-child{border-left-color:transparent;padding-bottom:0}
+.step::before{content:counter(s);position:absolute;left:-13px;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;
+  display:grid;place-items:center;font-family:var(--g)}
+.step h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.step p{font-size:14.5px;color:var(--sub)}
+
+/* 向いていない */
+.no li{list-style:none;padding:14px 0 14px 30px;border-bottom:1px dashed var(--line);position:relative;
+  font-size:15px;color:var(--sub)}
+.no li:last-child{border-bottom:0}
+.no li::before{content:"×";position:absolute;left:4px;top:14px;color:var(--red);font-weight:700}
+.no li b{color:var(--ink);font-weight:600}
+
+/* 事実 */
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.facts span{border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:13px;
+  color:var(--sub)}
+
+/* CTA */
+.cta{background:var(--ink);color:#fff;padding:72px 0;border:0;text-align:center}
+.cta h2{color:#fff}
+.cta h2::before{display:none}
+.cta p{color:#B5B5B5;font-size:15px;margin-top:14px}
+.btn{display:inline-block;margin-top:30px;background:var(--red);color:#fff;text-decoration:none;
+  padding:17px 44px;border-radius:3px;font-weight:700;font-size:15.5px;letter-spacing:.06em;
+  transition:background .2s}
+.btn:hover{background:var(--red-d)}
+.cta small{display:block;margin-top:20px;color:#8A8A8A;font-size:12.5px;line-height:1.8}
+
+/* footer */
+footer{padding:40px 0;font-size:12.5px;color:var(--faint);text-align:center}
+footer a{color:var(--sub);margin:0 9px;text-decoration:none}
+footer a:hover{color:var(--red)}
+footer .c{margin-top:16px;letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<header class="hd"><div class="wrap">
+  <a class="logo" href="https://chiero.jp/">CHIER<b>O</b></a>
+  <nav>
+    <a href="#terms">条件</a>
+    <a href="#flow">進め方</a>
+    <a href="#apply">申し込む</a>
+  </nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>詰まりを、<br><span class="r">取る。</span></h1>
+  <p class="lead">
+    自分が<b>流れの通り道</b>であり、その流れを感じて、<b>詰まりを取る</b>。<br>
+    これは、そのための入り口です。
+  </p>
+</div></div>
+
+<section id="what"><div class="wrap">
+  <h2>これは何か</h2>
+  <p class="note">顧問（相談役）です</p>
+  <div class="body">
+    <p>経営者の意思決定に、顧問として伴走します。<b>月1回90分</b>。これは新しく作ったものではなく、いま続いている顧問契約と<b>同じ形</b>です。</p>
+    <p>答えを渡す関わり方はしません。<b>同じ側に立って、構造を見つける</b>関わり方です。私は自分の資本で判断していて、外部資金は受け入れていません。隣で同じ賭けをしている人間として話します。</p>
+    <p>やり方や手順をお伝えするものではありません。目の前の一つの判断について、詰まっているところを一緒に見ます。</p>
+  </div>
+</div></section>
+
+<section id="terms"><div class="wrap">
+  <h2>条件</h2>
+  <p class="note">すべて掲載しています。非公開の価格や、あとから増える費用はありません</p>
+  <dl class="terms">
+    <div class="trow"><dt>初回</dt><dd>
+      <span class="price">50,000円<span class="u">税込</span></span>
+      <small>90分・オンライン。ここから始まります。</small>
+    </dd></div>
+    <div class="trow"><dt>顧問契約</dt><dd>
+      <span class="price">1,100,000円<span class="u">税込 / 3ヶ月</span></span>
+      <small>月1回90分（計3回）＋ LINEでの質問は期間中いつでも、回数の制限なく。</small>
+    </dd></div>
+    <div class="trow"><dt>初回分の扱い</dt><dd>
+      顧問契約に進む場合、初回の <b>50,000円は 1,100,000円に充当</b>します。
+      <small>実質のご負担は 1,100,000円です。初回分が二重にかかることはありません。</small>
+    </dd></div>
+    <div class="trow"><dt>お支払い</dt><dd>
+      銀行振込 / クレジットカード / 分割
+      <small>ご請求書をお送りします。分割の回数はご相談ください。</small>
+    </dd></div>
+  </dl>
+</div></section>
+
+<section id="flow"><div class="wrap">
+  <h2>進め方</h2>
+  <p class="note">初回のその場で契約はしません</p>
+  <div class="steps">
+    <div class="step"><h3>お申し込み</h3>
+      <p>下のボタンからご連絡ください。いま抱えている詰まりを、一行で結構ですのでお書き添えください。</p></div>
+    <div class="step"><h3>初回 90分（50,000円）</h3>
+      <p>オンラインで話します。この90分だけで終わっても構いません。</p></div>
+    <div class="step"><h3>持ち帰る</h3>
+      <p><b>その場では契約しません。</b>後日あらためてメールでご案内します。会わないという判断も、同じだけ正しい判断です。</p></div>
+    <div class="step"><h3>顧問契約（3ヶ月）</h3>
+      <p>お互いに合うと判断できたときだけ。月1回90分と、LINEでの質問。</p></div>
+  </div>
+</div></section>
+
+<section id="not"><div class="wrap">
+  <h2>向いていないこと</h2>
+  <p class="note">先に書いておきます</p>
+  <ul class="no">
+    <li><b>答えがほしい</b> — 渡しません。同じ側に立って一緒に見ます。</li>
+    <li><b>成果を保証してほしい</b> — 保証しません。私は保証できるものを持っていません。</li>
+    <li><b>やり方を教えてほしい</b> — 手順やメソッドはお伝えしていません。</li>
+    <li><b>すぐに結果がほしい</b> — 詰まりが取れて流れが変わるまでには、時間がかかります。</li>
+  </ul>
+</div></section>
+
+<section id="who"><div class="wrap">
+  <h2>話す相手について</h2>
+  <p class="note">チエロ（中田 光）</p>
+  <div class="body">
+    <p>1993年福岡生まれ。九州大学大学院でITと医療を研究したのち、プロの大道芸人として福岡・東京・シドニーで活動。IT企業を経て、2020年12月に株式会社CHIEROを創業しました。</p>
+    <p>いまは、自己資本による投資と研究開発を軸に、経営者の相談役、プロダクト開発、執筆をしています。</p>
+  </div>
+  <div class="facts">
+    <span>投資家</span><span>作家</span><span>一人会社</span>
+    <span>著書200冊超</span><span>株式会社CHIERO 代表取締役</span>
+    <span>法人番号 7290001091210</span>
+  </div>
+  <p class="body" style="margin-top:24px;font-size:14.5px">
+    会社・実績・著書の詳細は <a href="https://chiero.jp/" style="color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)">chiero.jp</a> をご覧ください。
+    日々考えていることは <a href="https://note.com/kounkt" style="color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)">note</a> にほぼ毎日書いています。
+  </p>
+</div></section>
+
+<section class="cta" id="apply"><div class="wrap">
+  <h2>お申し込み</h2>
+  <p>まず、初回の90分から。</p>
+  <a class="btn" href="mailto:CONTACT_EMAIL?subject=%E9%A1%A7%E5%95%8F%E3%81%AE%E4%BB%B6&amp;body=%E3%81%84%E3%81%BE%E6%8A%B1%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E8%A9%B0%E3%81%BE%E3%82%8A%EF%BC%88%E4%B8%80%E8%A1%8C%E3%81%A7%E7%B5%90%E6%A7%8B%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E4%BC%9A%E7%A4%BE%E5%90%8D%EF%BC%9A%0A">メールで申し込む</a>
+  <small>
+    顧問枠には上限があります。空きがない場合はその旨をお返しします。<br>
+    3営業日以内に返信します。
+  </small>
+</div></section>
+
+<footer><div class="wrap">
+  <a href="https://chiero.jp/">会社について</a>
+  <a href="/tokushoho/">特定商取引法に基づく表記</a>
+  <a href="https://chiero.jp/privacy/">プライバシーポリシー</a>
+  <p class="c">© 株式会社CHIERO</p>
+</div></footer>
+
+</body>
+</html>
