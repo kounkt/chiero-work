@@ -165,6 +165,35 @@ details .a b{color:var(--ink)}
 .facts span{border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:13px;color:var(--sub)}
 .ln{color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
 
+/* 写真。雰囲気を足すためではなく、文字の主張の証拠としてのみ置く（DESIGN.md §7）。 */
+.ph-wide{margin:30px 0 34px}
+.ph-wide img{width:100%;height:auto;display:block;border-radius:4px;border:1px solid var(--line)}
+.ph-wide figcaption{margin-top:11px;font-size:12.5px;color:var(--faint);line-height:1.85}
+.ph-wide figcaption b{color:var(--sub);font-weight:600}
+
+/* お客様の声。転記せずXの原文へ飛ばす。属性だけ添える。 */
+.voices{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:34px;
+  background:var(--line);border:1px solid var(--line)}
+@media(max-width:680px){.voices{grid-template-columns:1fr}}
+.voice{background:var(--paper);padding:19px 20px;text-decoration:none;display:block;transition:background .2s}
+.voice:hover{background:var(--alt)}
+.voice .who{font-size:14px;font-weight:600;line-height:1.7;margin-bottom:5px}
+.voice .go{font-size:12px;color:var(--red)}
+.disclaim{margin-top:24px;font-size:12.5px;color:var(--faint);line-height:1.95}
+
+/* メディア掲載 */
+.press{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
+@media(max-width:680px){.press{grid-template-columns:1fr}}
+.press a{border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none;
+  display:block;transition:transform .2s,box-shadow .2s;background:var(--paper)}
+.press a:hover{transform:translateY(-2px);box-shadow:0 5px 18px rgba(0,0,0,.06)}
+.press .th{aspect-ratio:1200/630;overflow:hidden;background:var(--alt)}
+.press .th img{width:100%;height:100%;object-fit:cover;display:block}
+.press .tx{padding:15px 17px}
+.press .md{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--red);margin-bottom:6px}
+.press .tt{font-size:12.5px;color:var(--sub);line-height:1.8}
+.press .dt{font-size:11px;color:var(--faint);margin-top:6px}
+
 /* 権威性。肩書きを並べるのではなく、各行に検証手段を添える。
    だから .cn（根拠と確かめ方）を省略しないこと。 */
 .creds{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:36px;
@@ -247,6 +276,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
   <div class="body">
     <p><b>月に一度、90分。あなたの判断の隣に座ります。</b>その月にいちばん詰まっているものを持ってきてください。二人で、引っかかっている一点を探します。契約期間中は、LINEでいつでも投げていただけます。回数の制限はありません。</p>
     <p>新しく始めた商品ではありません。<b>いま続いている顧問契約と同じ形</b>で、枠を開けるものです。あなたが最初の一人ではない、ということです。</p>
+    <p>AIを事業のどこにどう入れるか、広告をどう回すか、SNSで何が伸びるか——<b>そういう実務の話もします。</b>私自身、動画広告の事業を立ち上げて回してきましたし、SNSは40万人が見ています。ただし、<b>やり方をお伝えするのではありません。</b>あなたの事業のどこが詰まっているかを一緒に見て、その一点にAIや広告が効くなら、そこで使うだけです。</p>
     <p>答えはお渡ししません。<b>渡された答えは、あなたの中で流れないからです。</b>かわりに、あなたがもう持っている答えが、なぜ出てこないのかを見ます。出てくるようになれば、次からは私がいなくても決まります。</p>
     <p>そして、<b>「やめたほうがいい」と言ってもらえる場所ができます。</b>私はあなたに何も売りません。<b>顧問料のほかに、あなたから受け取るものは一つもありません。</b>成功報酬も、紹介料も、取りません。だから、あなたが何を決めても私の損得は動きません。<b>利害のない相手が、一人もいない</b>——それが、経営者からいちばん多く聞く詰まりです。</p>
   </div>
@@ -379,7 +409,7 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <p class="a">ありません。<b>顧問でお話しした中身は、お名前も、会社名も、事例としても、匿名にしても出しません。</b>ご希望があれば、秘密保持契約（NDA）を結びます。<br>なお、これと「あなたが書いた感想」は別の話です。感想をどこかに載せるかどうかは<b>あなたが決めること</b>で、こちらから頼むことはありません。</p></details>
 
   <details><summary>他の人の感想は、どこで読めますか。</summary>
-    <p class="a">このページには載せていません。<b>Xでご本人の許可のもと公開しているものを、原文のままご覧ください。</b><a class="ln" href="https://x.com/chiero_piero" target="_blank" rel="noopener">@chiero_piero</a> で「お客様の声」として公開しています。<br>ここへ転記しないのは、<b>切り取れば都合よく見せられてしまうから</b>です。日付も、書いた分量も、そのまま見て判断してください。なお、<b>成果には個人差があり、特定の結果を保証するものではありません。</b></p></details>
+    <p class="a"><a class="ln" href="#voices">この下</a>に、ご本人の許可のもとXで公開しているものへのリンクを並べています。<b>このページには転記していません。</b>切り取れば都合よく見せられてしまうからです。日付も、書いた分量も、そのまま見て判断してください。<br>なお、<b>成果には個人差があり、特定の結果を保証するものではありません。</b></p></details>
 
   <details><summary>分割は何回まで可能ですか。</summary>
     <p class="a"><b>最大24回</b>までご利用いただけます。クレジットカード決済に対応しています。分割手数料はお客様のご負担になります。</p></details>
@@ -401,6 +431,15 @@ footer .c{margin-top:16px;letter-spacing:.06em}
 <section id="who"><div class="wrap">
   <h2>話す相手について</h2>
   <p class="note">チエロ（中田 光）— 株式会社CHIERO 代表取締役</p>
+
+  <!-- 「30分で100人の足を止めた」は、これまで文字だけの自己申告だった。
+       写真が、その一文を検証可能な事実にする。前列は肖像に配慮してぼかす。 -->
+  <figure class="ph-wide">
+    <img src="media/street-crowd.jpg" alt="福岡・天神での大道芸。数百人の観客が座って見ている"
+         width="1600" height="900" loading="lazy" decoding="async">
+    <figcaption>福岡・天神。<b>足を止めて、座らせて、最後まで見せる。</b>これが最初の仕事でした。</figcaption>
+  </figure>
+
   <div class="body">
     <p>福岡生まれ。九州大学大学院でITと医療を研究したのち、<b>プロの大道芸人</b>になりました。福岡・東京の路上から、オーストラリア・シドニーまで。始めて30分で100人の足を止める仕事です。そのあと東京のIT企業で約2年、マーケティングと課題解決の現場に立ちました。<b>路上で覚えた「人の足が止まる瞬間」の勘に、論理と数字が乗ったのがここです。</b></p>
     <p>2020年12月、福岡に戻って株式会社CHIEROを設立。人を雇わず、一人で始めました。いまは投資と研究開発を軸に、経営者の相談役、プロダクト開発、執筆をしています。</p>
@@ -437,12 +476,70 @@ footer .c{margin-top:16px;letter-spacing:.06em}
     <div class="cred">
       <p class="ct">SNS</p>
       <p class="cb">総フォロワー40万人</p>
-      <p class="cn">累計再生10億回超。ビジネスメディア『新R25』の企画「The Next Creators」にも取材されています。</p>
+      <p class="cn">累計再生10億回超。何が伸びて何が伸びないかは、自分の手で確かめてきました。</p>
     </div>
+  </div>
+
+  <!-- メディア掲載。第三者の編集記事＝自社が作った表示ではない。
+       ただし「事業者が選んで掲げた」以上、成果訴求のタイトルを大きく出さない。
+       媒体名と日付を主にし、タイトルは記事側の事実として小さく置く（景表法）。 -->
+  <div class="press">
+    <a href="https://r25.jp/articles/928885030173343744" target="_blank" rel="noopener">
+      <div class="th"><img src="https://img.neirong.plus/o/0e/1e/0e1eb2fa34c8424a9eb2fa34c8324a3a.jpg"
+        alt="新R25 の取材記事" loading="lazy" decoding="async"></div>
+      <div class="tx">
+        <p class="md">新R25 MEDIA — 取材</p>
+        <p class="tt">「The Next Creators」企画。SNS発信を通じて自己実現する方法について取材を受けました。</p>
+        <p class="dt">2023.04.12</p>
+      </div>
+    </a>
+    <a href="https://note.com/kashika_dpro/n/n81ce37d42396" target="_blank" rel="noopener">
+      <div class="th"><img src="https://assets.st-note.com/production/uploads/images/108808437/rectangle_large_type_2_965fc0246b22219cbaae9a56f31099d6.png?width=1280"
+        alt="株式会社KASHIKA の対談記事" loading="lazy" decoding="async"></div>
+      <div class="tx">
+        <p class="md">株式会社KASHIKA — 対談</p>
+        <p class="tt">TikTok運用と動画広告の実務、AIを使った効率化について話しました。</p>
+        <p class="dt">2024.04.25</p>
+      </div>
+    </a>
   </div>
 
   <p class="body" style="margin-top:34px;font-size:14.5px">
     会社の登記情報・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。<b>肩書きではなく、確かめられる事実で判断してください。</b>
+  </p>
+</div></section>
+
+<!-- お客様の声。転記せずXの原文へ。切り取れないことが誠実さの証拠になる。
+     17件を全件読んで仕分けた8件のみ（仕分けは chiero_site_docs/testimonials_triage_2026-07-16.md）。
+     薬機法（効能効果の体験談は注釈付きでもNG）・景表法（数字入り成果）に触れる9件は指さない。 -->
+<section id="voices"><div class="wrap">
+  <h2>この人たちが、先に受けています。</h2>
+  <p class="note">コーチングとしてご一緒した方が、ご本人の許可のもとXで公開しているものです</p>
+  <div class="body">
+    <p>このページには<b>転記しません。原文のまま読んでください。</b>切り取れば、都合よく見せられてしまうからです。日付も、書いた分量も、そのまま残っています。</p>
+  </div>
+  <div class="voices">
+    <a class="voice" href="https://x.com/chiero_piero/status/1829015420420161784" target="_blank" rel="noopener">
+      <p class="who">20代で年商2桁億の社長</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1848231917361287411" target="_blank" rel="noopener">
+      <p class="who">月商4,000万を定期的に達成される経営者</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1845356600749588929" target="_blank" rel="noopener">
+      <p class="who">20代前半で自らの事業を軌道に乗せた方</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1829717017932546274" target="_blank" rel="noopener">
+      <p class="who">女性経営者</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1832024729815052505" target="_blank" rel="noopener">
+      <p class="who">数多くのセミナーを受けてきた方</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1860613804960432608" target="_blank" rel="noopener">
+      <p class="who">個人で活動するエンジニア</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1871036077374607686" target="_blank" rel="noopener">
+      <p class="who">個人で活動するエンジニア（収益化の軸）</p><p class="go">Xで読む →</p></a>
+    <a class="voice" href="https://x.com/chiero_piero/status/1837440754480042036" target="_blank" rel="noopener">
+      <p class="who">学び方そのものを変えた方</p><p class="go">Xで読む →</p></a>
+  </div>
+  <p class="disclaim">
+    いずれも<b>コーチングとしてご一緒した方の感想</b>で、顧問契約とは別の関わり方です。<br>
+    <b>成果には個人差があり、特定の結果を保証するものではありません。</b>
+    顧問でお話しした中身は、これまでも、これからも出しません。
   </p>
 </div></section>
 
