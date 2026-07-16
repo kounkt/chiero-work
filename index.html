@@ -165,6 +165,16 @@ details .a b{color:var(--ink)}
 .facts span{border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:13px;color:var(--sub)}
 .ln{color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
 
+/* 権威性。肩書きを並べるのではなく、各行に検証手段を添える。
+   だから .cn（根拠と確かめ方）を省略しないこと。 */
+.creds{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:36px;
+  background:var(--line);border:1px solid var(--line)}
+@media(max-width:680px){.creds{grid-template-columns:1fr}}
+.cred{background:var(--paper);padding:24px 22px}
+.ct{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--red);margin-bottom:7px}
+.cb{font-family:var(--m);font-size:19px;font-weight:600;line-height:1.5;margin-bottom:9px}
+.cn{font-size:13px;color:var(--sub);line-height:1.95}
+
 /* ⑤ 最後の一押し */
 .cta{background:var(--ink);color:#fff;padding:88px 0;border:0;text-align:center}
 .cta h2{color:#fff;font-size:min(28px,5.8vw);font-family:var(--m)}
@@ -387,17 +397,49 @@ footer .c{margin-top:16px;letter-spacing:.06em}
 <!-- 話す相手 -->
 <section id="who"><div class="wrap">
   <h2>話す相手について</h2>
-  <p class="note">チエロ（中田 光）</p>
+  <p class="note">チエロ（中田 光）— 株式会社CHIERO 代表取締役</p>
   <div class="body">
-    <p>1993年福岡生まれ。九州大学大学院でITと医療を研究したのち、プロの大道芸人として福岡・東京・シドニーで活動。IT企業を経て、2020年12月に株式会社CHIEROを創業しました。</p>
-    <p>いまは、自己資本による投資と研究開発を軸に、経営者の相談役、プロダクト開発、執筆をしています。</p>
+    <p>福岡生まれ。九州大学大学院でITと医療を研究したのち、<b>プロの大道芸人</b>になりました。福岡・東京の路上から、オーストラリア・シドニーまで。始めて30分で100人の足を止める仕事です。そのあと東京のIT企業で約2年、マーケティングと課題解決の現場に立ちました。<b>路上で覚えた「人の足が止まる瞬間」の勘に、論理と数字が乗ったのがここです。</b></p>
+    <p>2020年12月、福岡に戻って株式会社CHIEROを設立。人を雇わず、一人で始めました。いまは自己資本による投資と研究開発を軸に、経営者の相談役、プロダクト開発、執筆をしています。<b>外部資金は受け入れていません。</b></p>
   </div>
-  <div class="facts">
-    <span>投資家</span><span>作家</span><span>一人会社</span>
-    <span>著書200冊超</span><span>株式会社CHIERO 代表取締役</span><span>法人番号 7290001091210</span>
+
+  <!-- 権威性は「肩書きの列挙」ではなく「第三者が確かめられる事実」で出す。
+       各行に検証手段（リンク・カテゴリ名・番組名）を必ず添えること。 -->
+  <div class="creds">
+    <div class="cred">
+      <p class="ct">世界経済フォーラム</p>
+      <p class="cb">GSC_ROLE</p>
+      <p class="cn">ダボス会議で知られる世界経済フォーラムが選ぶ、33歳以下の若手リーダーのコミュニティ。経験・リーダーシップ・社会を変える意志で選出されます。</p>
+    </div>
+    <div class="cred">
+      <p class="ct">公益財団法人</p>
+      <p class="cb">ISHIBASHI_ROLE</p>
+      <p class="cn">1957年設立、福岡の給付型奨学金財団。これまでに780名を超える奨学生を支援しています。評議員は登記され、誰でも確認できます。</p>
+    </div>
+    <div class="cred">
+      <p class="ct">著書</p>
+      <p class="cb">200冊超</p>
+      <p class="cn">哲学・東洋思想からAIの実務書まで、すべてKindleで。『初心者のための『葉隠』入門書』はAmazonの「歴史・地理の参考図書・白書」カテゴリで1位。<a class="ln" href="https://www.amazon.co.jp/stores/author/B0DQGV7F8D" target="_blank" rel="noopener">著者ページ</a></p>
+    </div>
+    <div class="cred">
+      <p class="ct">日本テレビ</p>
+      <p class="cb">『ザ!鉄腕!DASH!!』</p>
+      <p class="cn">「知ると驚き!タコのふしぎSP」へ、撮影した動画を提供。番組内で提供元としてクレジットが掲載されています。</p>
+    </div>
+    <div class="cred">
+      <p class="ct">YouTube 出演</p>
+      <p class="cb">【経営者の哲学】</p>
+      <p class="cn">「愛に生きる小林社長の部屋」へ第1回のゲストとして出演。何を考えてこの仕事をしているかは、ここで話しています。<a class="ln" href="https://youtu.be/c7xsuyiRcrg" target="_blank" rel="noopener">動画を見る</a></p>
+    </div>
+    <div class="cred">
+      <p class="ct">SNS</p>
+      <p class="cb">総フォロワー40万人</p>
+      <p class="cn">累計再生10億回超。ビジネスメディア『新R25』の企画「The Next Creators」にも取材されています。</p>
+    </div>
   </div>
-  <p class="body" style="margin-top:26px;font-size:14.5px">
-    会社・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。法人番号で登記も照合できます。
+
+  <p class="body" style="margin-top:34px;font-size:14.5px">
+    会社の登記情報・実績・著書の詳細は <a class="ln" href="https://chiero.jp/">chiero.jp</a> に。<b>肩書きではなく、確かめられる事実で判断してください。</b>
   </p>
 </div></section>
 
