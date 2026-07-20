@@ -231,6 +231,32 @@ for f in ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "assets/og.png"]
 chk('rel="icon"' in LP and 'rel="icon"' in TK, "faviconがLPと特商法の両方で参照されている")
 chk("summary_large_image" in LP and "og:image" in LP, "og:imageとlarge_imageカードがある（共有時の見え方）")
 
+# ── 10. アクセス統計ビーコンのゲート（G1/G3/G4。chiero_analytics/DIRECTIVE.md §2 Step4）──
+# work.chiero.jp は自前の privacy を持たず chiero.jp/privacy を指す。G2（告知の整合）は
+# chiero_site 側で守る。ここでは「ビーコンが正しく1本」「他社トラッカー・Cookieバナー無し」。
+CF_TOKEN = "3bd0c55b54044e909e20029c110432d1"          # work.chiero.jp
+CF_PAGES = ["index.html", "tokushoho/index.html", "404.html"]
+BEACON = "static.cloudflareinsights.com/beacon.min.js"
+OTHER_TRACKERS = ["googletagmanager.com", "gtag(", "google-analytics.com",
+                  "connect.facebook.net", "fbq(", "static.hotjar.com",
+                  "clarity.ms", "matomo", "plausible.io", "segment.com"]
+COOKIE_BANNER = ["cookieconsent", "cookie-consent", "cookiebanner",
+                 "cookie-banner", "cookiebot", "onetrust", "gdpr-banner"]
+
+for rel in CF_PAGES:
+    p = ROOT / rel
+    if not p.exists():
+        ng.append(f"G1 ビーコン対象ページが無い: {rel}")
+        continue
+    t = p.read_text(encoding="utf-8")
+    chk(BEACON in t and CF_TOKEN in t, f"G1 {rel} にビーコン（正しいトークン）がある",
+        "beacon.min.js と work.chiero.jp トークンの両方が要る")
+    chk(t.count(BEACON) <= 1, f"G1 {rel} のビーコンは1本だけ", "二重計測しない")
+    hit = [w for w in OTHER_TRACKERS if w in t]
+    chk(not hit, f"G3 {rel} に他社トラッカーが無い", f"検出: {hit}")
+    hitb = [w for w in COOKIE_BANNER if w.lower() in t.lower()]
+    chk(not hitb, f"G4 {rel} にCookie同意バナーが無い", f"検出: {hitb}")
+
 print("=" * 60)
 print(f"✅ {len(ok)} 件")
 for x in ok:
