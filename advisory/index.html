@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>顧問契約のお支払い | 株式会社CHIERO</title>
+<meta name="description" content="顧問契約（はじめての3ヶ月・月1回90分＋LINE無制限）のお支払いページ。初回相談を終えた方は追加1,050,000円、まとめてお支払いの場合は1,100,000円（いずれも税込）。分割は最大24回。">
+<link rel="canonical" href="https://work.chiero.jp/advisory/">
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --red:#E60012; --red-d:#B8000E; --ink:#0E0E0E; --sub:#565656; --faint:#8E8E8E;
+  --paper:#FFFFFF; --alt:#F7F6F3; --line:#E5E3DE;
+  --g:"Hiragino Sans","Yu Gothic Medium","Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
+  --m:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--g);color:var(--ink);background:var(--paper);line-height:1.9;
+  -webkit-font-smoothing:antialiased;font-size:16px;font-feature-settings:"palt" 1}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+.hd{border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:700;letter-spacing:.14em;font-size:14px;text-decoration:none}
+.logo b{color:var(--red)}
+.hd nav a{font-size:13px;color:var(--sub);text-decoration:none;margin-left:20px}
+.hd nav a:hover{color:var(--red)}
+
+.head{padding:76px 0 60px;border-bottom:1px solid var(--line)}
+h1{font-family:var(--m);font-size:clamp(26px,5.4vw,38px);line-height:1.4;letter-spacing:.02em;font-weight:600}
+.lead{margin-top:26px;font-size:16px;color:var(--sub);max-width:34em}
+.lead b{color:var(--ink);font-weight:600}
+
+section{padding:66px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--m);font-size:min(25px,5.4vw);font-weight:600;letter-spacing:.04em;line-height:1.6}
+h2::before{content:"";display:inline-block;width:22px;height:2px;background:var(--red);
+  vertical-align:middle;margin-right:12px;transform:translateY(-5px)}
+.note{font-size:13px;color:var(--faint);margin:8px 0 34px;padding-left:34px}
+.body{font-size:16px;color:var(--sub)}
+.body b{color:var(--ink);font-weight:600}
+p+p{margin-top:1.2em}
+
+/* 内訳の算数。5万＋105万＝110万 が一目で合うこと */
+.calc{background:var(--alt);border:1px solid var(--line);border-radius:4px;padding:26px 28px;
+  font-size:15px;color:var(--sub);line-height:2.1;font-feature-settings:"tnum" 1}
+.calc b{color:var(--ink);font-weight:600}
+.calc .t{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;display:block}
+
+/* 2つの支払い。並べるが、比較して煽らない。赤は使わない（§4 赤の掟） */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:680px){.opts{grid-template-columns:1fr}}
+.opt{border:1px solid var(--line);border-radius:4px;padding:30px 28px;display:flex;flex-direction:column}
+.opt .who{font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--sub);
+  background:var(--alt);display:inline-block;padding:5px 11px;border-radius:2px;align-self:flex-start}
+.opt .price{font-family:var(--m);font-size:31px;font-weight:600;letter-spacing:.02em;margin-top:22px;
+  font-feature-settings:"tnum" 1}
+.opt .price .u{font-size:13px;color:var(--faint);font-family:var(--g);margin-left:5px;letter-spacing:0}
+.opt .d{font-size:14px;color:var(--sub);margin-top:14px;flex:1}
+.opt .d b{color:var(--ink);font-weight:600}
+.pill{display:inline-block;margin-top:26px;background:var(--ink);color:#fff;text-decoration:none;
+  padding:16px 30px;border-radius:999px;font-weight:700;font-size:14.5px;letter-spacing:.06em;
+  text-align:center;transition:background .2s,transform .2s}
+.pill:hover{background:var(--red);transform:translateY(-1px)}
+
+.terms{border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.trow{display:grid;grid-template-columns:170px 1fr;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.trow dt{background:var(--alt);padding:18px;font-size:13px;font-weight:600;color:var(--sub);letter-spacing:.04em}
+.trow dd{padding:18px;font-size:15px}
+.trow dd small{display:block;color:var(--faint);font-size:12.5px;line-height:1.8;margin-top:7px}
+@media(max-width:560px){.trow{grid-template-columns:1fr}
+  .trow dt{padding:14px 16px 4px;background:transparent;color:var(--red)}
+  .trow dd{padding:0 16px 16px}}
+
+footer{padding:44px 0;font-size:12.5px;color:var(--faint);text-align:center}
+footer a{color:var(--sub);margin:0 9px;text-decoration:none}
+footer a:hover{color:var(--red)}
+footer .c{margin-top:16px;letter-spacing:.06em}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+
+<header class="hd"><div class="wrap">
+  <a class="logo" href="../">CHIER<b>O</b></a>
+  <nav><a href="../">条件をすべて読む</a><a href="../tokushoho/">特定商取引法に基づく表記</a></nav>
+</div></header>
+
+<div class="head"><div class="wrap">
+  <h1>顧問契約のお支払い</h1>
+  <p class="lead">
+    はじめての3ヶ月（月1回90分＋LINE無制限）のお支払いページです。
+    <b>初回相談を終えて、続けると決めた方のためのページなので、ここから読み始める必要はありません。</b>
+    条件は <a href="../">work.chiero.jp</a> にすべて公開しています。
+  </p>
+</div></div>
+
+<section><div class="wrap">
+  <h2>金額の内訳</h2>
+  <p class="note">初回相談分が二重にかかることはありません</p>
+  <div class="calc">
+    初回相談（90分）　<b>50,000円</b>（税込）<br>
+    顧問契約 はじめての3ヶ月　<b>1,050,000円</b>（税込）
+    <span class="t">お支払総額　<b>1,100,000円</b>（税込）</span>
+  </div>
+  <p class="body" style="margin-top:24px">
+    すでに初回相談の50,000円をお支払いいただいている方は、<b>残りの1,050,000円だけ</b>をお支払いください。
+    初回相談を経ずにまとめてお支払いになる場合は、<b>1,100,000円</b>です。どちらでも総額は変わりません。
+  </p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>お支払い</h2>
+  <p class="note">どちらか一方をお選びください</p>
+  <div class="opts">
+    <div class="opt">
+      <span class="who">初回相談をお支払い済みの方</span>
+      <div class="price">1,050,000<span class="u">円（税込）</span></div>
+      <p class="d">初回相談の50,000円との差額です。<b>大半の方はこちらです。</b></p>
+      <a class="pill" href="https://univa.cc/K9JH3K">この金額でお支払いへ</a>
+    </div>
+    <div class="opt">
+      <span class="who">まとめてお支払いの方</span>
+      <div class="price">1,100,000<span class="u">円（税込）</span></div>
+      <p class="d">初回相談と顧問契約を、一度にお支払いになる場合です。</p>
+      <a class="pill" href="https://univa.cc/z8WmPn">この金額でお支払いへ</a>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>お支払いの条件</h2>
+  <p class="note">詳しくは特定商取引法に基づく表記に書いています</p>
+  <dl class="terms">
+    <div class="trow"><dt>お支払い方法</dt><dd>
+      クレジットカード（この画面から決済）／銀行振込
+      <small>Visa / Mastercard / JCB / American Express / Diners Club / Discover。銀行振込をご希望の場合は、振込先をメールでお送りしますのでご連絡ください。振込手数料はお客様のご負担になります。</small>
+    </dd></div>
+    <div class="trow"><dt>分割払い</dt><dd>
+      最大24回
+      <small>決済画面の「支払い回数」でお選びください。分割手数料はお客様のご負担になります。<br><b>American Express は購入時に分割回数を指定する方式に対応していないため、この画面では分割をお選びいただけません。</b>一括でお支払いのうえ、アメックスの「あと分割」（3回・6回・12回／1万円以上のご利用が対象）でご変更いただけます。</small>
+    </dd></div>
+    <div class="trow"><dt>役務の提供期間</dt><dd>
+      3ヶ月（月1回90分＋LINE無制限）
+      <small>初回の日程は、お支払い後に公式LINE（またはメール）で合わせます。</small>
+    </dd></div>
+    <div class="trow"><dt>対応時間</dt><dd>
+      <b>10:00〜12:00</b>（土日祝を含む）
+      <small>セッションも、LINEでのご質問へのお返事も、基本はこの時間帯です。<b>土日祝の区別はありません。</b>この時間の外にいただいたご連絡には、次の対応時間にお返しします。</small>
+    </dd></div>
+    <div class="trow"><dt>4ヶ月目以降</dt><dd>
+      継続される場合は、3ヶ月あたり2,200,000円（税込）
+      <small>最終回の面談で、続けるかどうかを一緒に決めます。自動で更新・課金されることはありません。</small>
+    </dd></div>
+    <div class="trow"><dt>中途解約</dt><dd>
+      返金はいたしません
+      <small>3ヶ月分の役務提供枠を確保し、その間の他のお申し込みをお断りするためです。お支払いの前に <a href="../tokushoho/">特定商取引法に基づく表記</a> を必ずお読みください。</small>
+    </dd></div>
+  </dl>
+  <p class="body" style="margin-top:28px">
+    決済ページは UnivaPay（UNIVA Paycast Limited）の画面に移ります。
+    <b>カード情報が当社のサーバーに保存されることはありません。</b>
+  </p>
+</div></section>
+
+<footer><div class="wrap">
+  <a href="../">顧問のご依頼</a>
+  <a href="../apply/">初回相談のお申し込み</a>
+  <a href="../tokushoho/">特定商取引法に基づく表記</a>
+  <a href="https://chiero.jp/privacy/">プライバシーポリシー</a>
+  <p class="c">© 株式会社CHIERO</p>
+</div></footer>
+
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "3bd0c55b54044e909e20029c110432d1"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

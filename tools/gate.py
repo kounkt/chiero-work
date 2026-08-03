@@ -12,6 +12,14 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LP = (ROOT / "index.html").read_text(encoding="utf-8")
 TK = (ROOT / "tokushoho/index.html").read_text(encoding="utf-8")
+# 2026-08-03追加。決済ページを自前で持った（UTAGEのapply.chiero.jpを畳むため）。
+# 金を受け取る面が増えたのにゲートが見ていない、という状態を作らない。
+AP = (ROOT / "apply/index.html").read_text(encoding="utf-8")
+AD = (ROOT / "advisory/index.html").read_text(encoding="utf-8")
+# 決済成功後のリダイレクト先（UnivaPay 店舗設定「リンクフォーム設定 > リダイレクトURL > 成功」）。
+# ここが404だと、金を払った直後の画面が壊れる。ゲートで生かしておく。
+TH = (ROOT / "thanks/index.html").read_text(encoding="utf-8")
+PAY = {"apply": AP, "advisory": AD}
 ng, ok, warn = [], [], []
 
 
@@ -30,9 +38,17 @@ PLACEHOLDERS = {
     # X のプロフィールにも記載が無かった。110万円を売る面に未確認の肩書きを載せない。
     "GSC_ROLE": "Global Shapers Community での正確な役職名（Shaper／Curator／Alumni 等）とハブ名",
     "ISHIBASHI_ROLE": "公益財団法人石橋奨学会での正確な役職名（評議員 等）",
+    # 2026-08-03追加。本番のUnivaPayリンクURL。テストモードのURLを本番の面に貼る事故と、
+    # 空リンクのまま公開する事故の両方を止める。値が入るまで公開不可。
+    "UNIVAPAY_LINK_APPLY": "初回相談 50,000円 の本番リンクURL（https://univa.cc/…）",
+    "UNIVAPAY_LINK_ADVISORY_ADD": "顧問契約 追加分 1,050,000円 の本番リンクURL",
+    "UNIVAPAY_LINK_ADVISORY_FULL": "顧問契約 総額 1,100,000円 の本番リンクURL",
 }
+ALL_PAGES = (("index.html", LP), ("tokushoho/index.html", TK),
+             ("apply/index.html", AP), ("advisory/index.html", AD),
+             ("thanks/index.html", TH))
 for token, why in PLACEHOLDERS.items():
-    hit = [n for n, s in (("index.html", LP), ("tokushoho/index.html", TK)) if token in s]
+    hit = [n for n, s in ALL_PAGES if token in s]
     chk(not hit, f"プレースホルダ {token} が解決済み", f"未記入: {', '.join(hit)} / {why}")
 
 # 未記入テンプレの典型（旧WPのプライバシーが「制定日：xxxx年xx月xx日」だった）
@@ -40,7 +56,7 @@ for src, name in ((LP, "LP"), (TK, "特商法")):
     chk(not re.search(r"[xX]{3,}|〇〇|●●|TODO|FIXME|__", src), f"{name}に未記入テンプレの痕跡なし")
 
 # ── 2. Brand OS §2① 禁止語 ────────────────────────────────
-body = re.sub(r"<!--.*?-->", "", LP + TK, flags=re.S)
+body = re.sub(r"<!--.*?-->", "", LP + TK + AP + AD + TH, flags=re.S)
 for w in ["講師", "メンター", "支援者", "指導"]:
     chk(w not in body, f"禁止語「{w}」が無い")
 
@@ -159,6 +175,37 @@ WANT = {"50,000円", "1,050,000円", "1,100,000円", "2,200,000円"}
 chk(prices(LP) == prices(TK) == WANT,
     "4つの価格がLPと特商法で一致", f"LP={sorted(prices(LP))} 特商法={sorted(prices(TK))}")
 chk("税込" in LP and "税込" in TK, "総額表示（税込）が両方にある")
+# 決済ページは「実際に請求する額」を出す面なので、想定外の金額が1つでも混ざったら止める。
+# 上のprices()は既知4額しか拾わないため、疎通テスト用の10,000円などは素通りしてしまう。
+for name, src in PAY.items():
+    found = set(re.findall(r"[0-9]{1,3}(?:,[0-9]{3})+円", src))
+    chk(found and found <= WANT, f"{name} の金額が公開4価格の範囲内",
+        f"想定外の金額: {sorted(found - WANT)}（テスト用の額を本番の面に残していないか）")
+    chk("税込" in src, f"{name} に総額表示（税込）がある")
+# 5万＋105万＝110万 の算数は、金額を並べる面すべてで合っていること
+chk("お支払総額" in AD and "1,100,000円" in AD and "二重にかかることはありません" in AD,
+    "advisory に内訳（5万＋105万＝110万・二重取りなし）が明記されている")
+chk("二重にかかることはありません" in AP, "apply にも二重取りなしが明記されている")
+# サンクスページは「日程へ渡す」ためだけに存在する。導線が消えたら決済が宙に浮く。
+chk("lin.ee/YCCoRsBu" in TH, "thanks に公式LINEの導線がある", "決済後に日程へ渡す手段が消える")
+chk("chieropiero@gmail.com" in TH, "thanks にLINE以外の連絡手段（メール）もある")
+chk(not re.findall(r"[0-9]{1,3}(?:,[0-9]{3})+円", TH),
+    "thanks に金額を書いていない", "1本のリダイレクト先を全リンクで共用するため、特定の金額は書けない")
+# 決済後の導線は4面で食い違わせない（メールだけ／LINEだけ、が混在すると案内が割れる）
+for name, src in (("LP", LP), ("apply", AP), ("advisory", AD), ("特商法", TK)):
+    chk("LINE" in src, f"{name} の日程調整の記述に公式LINEが入っている")
+
+# ── 3c. 対応時間（2026-08-03 本人確定：10:00〜12:00・土日祝の区別なし）─────
+# 旧・特商法は「平日 10:00〜17:00（土日祝を除く）」だった。真逆なので、
+# 1面でも旧記載が生き残ると、その面だけ嘘になる。4面すべてで同時に守る。
+for name, src in (("LP", LP), ("apply", AP), ("advisory", AD), ("特商法", TK)):
+    chk("10:00〜12:00" in src, f"{name} に対応時間 10:00〜12:00 がある")
+    chk("土日祝を除く" not in src, f"{name} に旧記載『土日祝を除く』が残っていない",
+        "土日祝の区別はない。1面でも残ると特商法と食い違う")
+# 土日祝も動くので「営業日」は数え方が変わる。単位を暦日に統一しておく。
+for name, src in ALL_PAGES:
+    chk("営業日" not in src, f"{name} に「営業日」が残っていない",
+        "土日祝を含めて対応するため、営業日=暦日。誤解を生む単位は使わない")
 # 5万＋105万＝110万。この算数が壊れたら両方の面で嘘になる。
 chk("合計1,100,000円" in LP and "お支払総額は1,100,000円" in TK,
     "初回相談5万＋追加105万＝110万 がLPと特商法の両方に明記されている")
@@ -195,6 +242,15 @@ chk(MAIL in LP, "申込ボタンの宛先が特商法のメールと同一", "LP
 # 「中途解約は返金なし」はLP(FAQ)と特商法で必ず一致させる。片方だけだと不実告知になる。
 chk(re.search(r"中途解約.{0,40}返金.{0,10}(いたしません|ありません)", TK, re.S),
     "特商法に中途解約の返金なしが明記されている")
+# 初回相談は「返金しない代わりに日程変更を受ける」設計（2026-08-03本人確定）。
+# 返金なしだけが残って変更の受け皿が消えると、ただの取り切りになる。対で守る。
+for name, src in (("特商法", TK), ("apply", AP)):
+    chk("24時間前" in src, f"{name} に日程変更の受付期限（24時間前）がある")
+    chk(re.search(r"(ご都合による|お客様のご都合).{0,40}返金", src),
+        f"{name} に客都合の返金なしが明記されている")
+chk("日程のご変更で対応" in TK and "日程のご変更で対応" in AP,
+    "返金なしとセットで『日程変更で対応する』が両面にある",
+    "返金なしだけを書くと、代替手段のない取り切りに見える")
 chk(re.search(r"途中でやめたら.{0,300}ありません", LP, re.S),
     "LPのFAQでも返金なしを明言している", "特商法にだけ書くのは不実告知に近い")
 
@@ -202,7 +258,7 @@ chk(re.search(r"途中でやめたら.{0,300}ありません", LP, re.S),
 # CNAMEを置いた=work.chiero.jpで配信、置いていない=github.io配下。
 # canonical/og:url がこれとズレると、共有リンクが死んだURLをプレビューする（実際にやった）。
 LIVE = "https://work.chiero.jp/" if (ROOT / "CNAME").exists() else "https://kounkt.github.io/chiero-work/"
-urls = re.findall(r'rel="canonical" href="([^"]+)"', LP + TK) + \
+urls = re.findall(r'rel="canonical" href="([^"]+)"', LP + TK + AP + AD) + \
        re.findall(r'property="og:url" content="([^"]+)"', LP)
 chk(urls and all(u.startswith(LIVE) for u in urls),
     f"canonical/og:url が配信場所（{LIVE}）と一致",
@@ -218,8 +274,13 @@ if "15条の3" in TK or "法定返品権" in TK:
 # 相対リンク（../）は、その href が書かれているファイルの位置から解決する。
 # ROOT基準で見ると特商法の「../」を誤検知する。
 # 拡張子つき（favicon.svg 等）は実ファイル、拡張子なしはディレクトリ＋index.html。
-for src, base in ((LP, ROOT), (TK, ROOT / "tokushoho")):
+for src, base in ((LP, ROOT), (TK, ROOT / "tokushoho"),
+                  (AP, ROOT / "apply"), (AD, ROOT / "advisory"),
+                  (TH, ROOT / "thanks")):
     for href in set(re.findall(r'href="((?!https?:|mailto:|#)[^"#]+)"', src)):
+        # 未解決のUnivaPayリンクは上のプレースホルダ検査が報告済み。ここで二重に鳴らさない
+        if href in PLACEHOLDERS:
+            continue
         p = (ROOT / href.lstrip("/")) if href.startswith("/") else (base / href)
         p = p if pathlib.Path(href).suffix else p / "index.html"
         where = base.name or "/"
@@ -235,7 +296,8 @@ chk("summary_large_image" in LP and "og:image" in LP, "og:imageとlarge_imageカ
 # work.chiero.jp は自前の privacy を持たず chiero.jp/privacy を指す。G2（告知の整合）は
 # chiero_site 側で守る。ここでは「ビーコンが正しく1本」「他社トラッカー・Cookieバナー無し」。
 CF_TOKEN = "3bd0c55b54044e909e20029c110432d1"          # work.chiero.jp
-CF_PAGES = ["index.html", "tokushoho/index.html", "404.html"]
+CF_PAGES = ["index.html", "tokushoho/index.html", "404.html",
+            "apply/index.html", "advisory/index.html", "thanks/index.html"]
 BEACON = "static.cloudflareinsights.com/beacon.min.js"
 OTHER_TRACKERS = ["googletagmanager.com", "gtag(", "google-analytics.com",
                   "connect.facebook.net", "fbq(", "static.hotjar.com",
