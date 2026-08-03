@@ -20,6 +20,14 @@ AD = (ROOT / "advisory/index.html").read_text(encoding="utf-8")
 # ここが404だと、金を払った直後の画面が壊れる。ゲートで生かしておく。
 TH = (ROOT / "thanks/index.html").read_text(encoding="utf-8")
 PAY = {"apply": AP, "advisory": AD}
+
+# ── 初回相談の導線がどちらのレールに乗っているか（2026-08-03 本人指示）─────────
+# UTAGEを解約するまでは apply.chiero.jp（UTAGE・カレンダーで日程を選んでその場で決済）のまま。
+# 解約したら "self" に変える。**この定数を変えるだけでは通らない**——LPの文面も
+# 同時に直さないとゲートが落ちるようにしてある（導線とやり方の説明がズレる事故を止める）。
+LIVE_APPLY_RAIL = "utage"          # "utage" | "self"
+UTAGE_APPLY_URL = "https://apply.chiero.jp/p/UIA2tAAbI1rW"
+
 ng, ok, warn = [], [], []
 
 
@@ -192,8 +200,31 @@ chk("chieropiero@gmail.com" in TH, "thanks にLINE以外の連絡手段（メー
 chk(not re.findall(r"[0-9]{1,3}(?:,[0-9]{3})+円", TH),
     "thanks に金額を書いていない", "1本のリダイレクト先を全リンクで共用するため、特定の金額は書けない")
 # 決済後の導線は4面で食い違わせない（メールだけ／LINEだけ、が混在すると案内が割れる）
-for name, src in (("LP", LP), ("apply", AP), ("advisory", AD), ("特商法", TK)):
+for name, src in (("apply", AP), ("advisory", AD), ("特商法", TK)):
     chk("LINE" in src, f"{name} の日程調整の記述に公式LINEが入っている")
+
+# ── 3b-2. LPのCTAと「進め方」が、いま生きているレールと一致しているか ──────────
+# 導線だけ切り替えて説明を直し忘れる（またはその逆）と、書いてある手順どおりに進めない。
+cta = re.search(r'<a class="btn" href="([^"]+)"', LP)
+chk(bool(cta), "LPにCTAボタンがある")
+if cta:
+    if LIVE_APPLY_RAIL == "utage":
+        chk(cta.group(1) == UTAGE_APPLY_URL,
+            "LPのCTAがUTAGEの申込ページを指している（解約までは据え置き）",
+            f"LIVE_APPLY_RAIL='utage' なのに {cta.group(1)}")
+        chk("空いている日程を選んで" in LP and "その場で日程を選び" in LP,
+            "LPの進め方がUTAGEのやり方（カレンダーで選んでその場で決済）で書かれている",
+            "CTAはUTAGEなのに、説明が自前フォームの流れになっている")
+    else:
+        chk(cta.group(1) == "apply/",
+            "LPのCTAが自前の申込ページ（apply/）を指している",
+            f"LIVE_APPLY_RAIL='self' なのに {cta.group(1)}")
+        chk("空いている日程を選んで" not in LP,
+            "LPの進め方からカレンダーの記述が消えている",
+            "自前フォームにカレンダーは無い。UTAGE時代の説明が残っている")
+        chk("公式LINE" in LP, "LPの進め方が公式LINEでの日程調整になっている")
+        chk(UTAGE_APPLY_URL not in LP + TK + AP + AD + TH,
+            "解約後の面にUTAGEのURLが残っていない", "解約後は404になる")
 
 # ── 3c. 対応時間（2026-08-03 本人確定：10:00〜12:00・土日祝の区別なし）─────
 # 旧・特商法は「平日 10:00〜17:00（土日祝を除く）」だった。真逆なので、
