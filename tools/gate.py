@@ -1,366 +1,78 @@
-"""work.chiero.jp を公開してよいか判定する。
+"""Read-only checks for the current advisory site and quote-based pricing.
 
-このサイトは chiero.jp と違い「売る面」なので、通らせてはいけない条件が二種類ある。
-  1. 法令 — 特商法の必須項目が埋まっていること。未記入のまま公開したのが旧WordPressの事故。
-  2. 憲法 — Brand OS §2①の禁止語が入らないこと。旧LPは禁止語46回で不採用にした。
-placeholder が1つでも残っていたら公開しない。
+The retired fixed-price and brand-rule checks remain in Git history and the
+release backup. This verifies public content and routing, not legal compliance
+or real payment settlement. Run from any directory: python3 tools/gate.py.
 """
-import pathlib
-import re
-import sys
-
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-LP = (ROOT / "index.html").read_text(encoding="utf-8")
-TK = (ROOT / "tokushoho/index.html").read_text(encoding="utf-8")
-# 2026-08-03追加。決済ページを自前で持った（UTAGEのapply.chiero.jpを畳むため）。
-# 金を受け取る面が増えたのにゲートが見ていない、という状態を作らない。
-AP = (ROOT / "apply/index.html").read_text(encoding="utf-8")
-AD = (ROOT / "advisory/index.html").read_text(encoding="utf-8")
-# 決済成功後のリダイレクト先（UnivaPay 店舗設定「リンクフォーム設定 > リダイレクトURL > 成功」）。
-# ここが404だと、金を払った直後の画面が壊れる。ゲートで生かしておく。
-TH = (ROOT / "thanks/index.html").read_text(encoding="utf-8")
-PAY = {"apply": AP, "advisory": AD}
-
-# ── 初回相談の導線がどちらのレールに乗っているか（2026-08-03 本人指示）─────────
-# UTAGEを解約するまでは apply.chiero.jp（UTAGE・カレンダーで日程を選んでその場で決済）のまま。
-# 解約したら "self" に変える。**この定数を変えるだけでは通らない**——LPの文面も
-# 同時に直さないとゲートが落ちるようにしてある（導線とやり方の説明がズレる事故を止める）。
-LIVE_APPLY_RAIL = "utage"          # "utage" | "self"
-UTAGE_APPLY_URL = "https://apply.chiero.jp/p/UIA2tAAbI1rW"
-
-ng, ok, warn = [], [], []
-
-
-def chk(cond, label, detail=""):
-    """detail は落ちたときの説明。通ったときに出すと失敗に見えるので出さない。"""
-    ok.append(label) if cond else ng.append(f"{label}{(' — ' + detail) if detail else ''}")
-
-
-# ── 1. 未記入プレースホルダ（これが残る限り公開不可） ──────────────
-PLACEHOLDERS = {
-    "CONTACT_TEL": "特商法の電話番号（省略する場合も『請求があれば遅滞なく開示』の文言と実番号が要る）",
-    "CONTACT_EMAIL": "問い合わせ先メール（申込ボタンの宛先も同じ）",
-    "CANCEL_POLICY": "キャンセル・中途解約の条件（特商法11条の必須表示項目）",
-    # 2026-07-16追加。役職名は一次確認が取れるまで書かない。
-    # 「Fellow」は Global Shapers の標準用語（Shaper/Curator/Vice Curator/Alumni）に無く、
-    # X のプロフィールにも記載が無かった。110万円を売る面に未確認の肩書きを載せない。
-    "GSC_ROLE": "Global Shapers Community での正確な役職名（Shaper／Curator／Alumni 等）とハブ名",
-    "ISHIBASHI_ROLE": "公益財団法人石橋奨学会での正確な役職名（評議員 等）",
-    # 2026-08-03追加。本番のUnivaPayリンクURL。テストモードのURLを本番の面に貼る事故と、
-    # 空リンクのまま公開する事故の両方を止める。値が入るまで公開不可。
-    "UNIVAPAY_LINK_APPLY": "初回相談 50,000円 の本番リンクURL（https://univa.cc/…）",
-    "UNIVAPAY_LINK_ADVISORY_ADD": "顧問契約 追加分 1,050,000円 の本番リンクURL",
-    "UNIVAPAY_LINK_ADVISORY_FULL": "顧問契約 総額 1,100,000円 の本番リンクURL",
-}
-ALL_PAGES = (("index.html", LP), ("tokushoho/index.html", TK),
-             ("apply/index.html", AP), ("advisory/index.html", AD),
-             ("thanks/index.html", TH))
-for token, why in PLACEHOLDERS.items():
-    hit = [n for n, s in ALL_PAGES if token in s]
-    chk(not hit, f"プレースホルダ {token} が解決済み", f"未記入: {', '.join(hit)} / {why}")
-
-# 未記入テンプレの典型（旧WPのプライバシーが「制定日：xxxx年xx月xx日」だった）
-for src, name in ((LP, "LP"), (TK, "特商法")):
-    chk(not re.search(r"[xX]{3,}|〇〇|●●|TODO|FIXME|__", src), f"{name}に未記入テンプレの痕跡なし")
-
-# ── 2. Brand OS §2① 禁止語 ────────────────────────────────
-body = re.sub(r"<!--.*?-->", "", LP + TK + AP + AD + TH, flags=re.S)
-for w in ["講師", "メンター", "支援者", "指導"]:
-    chk(w not in body, f"禁止語「{w}」が無い")
-
-# コーチ／コンサルは §2① の注記が例外を定めている:
-#   「看板から外す。**過去実績としての言及は事実系（「コーチングで〜」）に留め、
-#     現在の名乗りには使わない**」
-# → 過去形・否定形は可。現在の名乗りだけを捕まえる。
-NAMING = (r"(私|僕|チエロ)(は|が)[^。]{0,8}(コーチ|コンサル)"          # 私はコーチです
-          r"|エグゼクティブ(コーチ|コンサル)"                           # 肩書き
-          r"|チエロ式(コーチング|コンサル)"                             # 商品名として名乗る
-          r"|(コーチング|コンサルティング)を(提供|承|行って|やって)"    # 現在提供している
-          r"|(コーチ|コンサルタント)として活動")
-for m in re.finditer(NAMING, body):
-    a = max(0, m.start()-40)
-    ng.append(f"「コーチ／コンサル」を現在の名乗りに使っている（§2①） — …{re.sub(r'<[^>]+>','',body[a:m.end()+30])}…")
-ok.append("「コーチ／コンサル」を現在の名乗りに使っていない（過去実績の事実系は §2① 注記で可）")
-# 「教える」は禁止語（§2① 上下の力学を生む語）だが、それを否定する文なら可。
-# 否定は同じブロックの後半に来るので囲みブロック単位で見る（12文字窓では誤検知した）。
-# 否定形は「〜ません」だけでなく「教える立場からではなく」もある。両方を許す。
-NEG = r"(していません|しません|お伝えしていません|ません|ではなく|ではありません)"
-for block in re.findall(r"<(?:li|p|h3)[^>]*>.*?</(?:li|p|h3)>", LP, re.S):
-    if "教え" in block and not re.search(NEG, block):
-        ng.append(f"「教える」が否定文以外で使われている — {re.sub(r'<[^>]+>', '', block).strip()}")
-
-# ── 3. Brand OS §3/§4 売り込み面の指標 ──────────────────────
-# 2026-07-16 方針確定: 感想の「転記」はしない。Xの原文へリンクするだけ。
-#   ・転記＝切り取れる＝売り込み面（§4）。リンク＝改変できない＝誠実さの証拠。
-#   ・薬機法: 効能効果の体験談は「注釈付きでもNG」（厚労省・医薬品等適正広告基準）。
-#     17件には健康系（肩の痛みが消えた／不眠が治った）が含まれるため、
-#     自社の広告面へ本文を持ち込まないことが最大の防御になる。
-chk(not re.search(r"---ここから---|〜チエロ式|コーチングを受けて|<blockquote", LP),
-    "お客様の感想を本文へ転記していない（リンクのみ）",
-    "転記すると切り取りになり、薬機法・景表法の露出も自社面に載る")
-# 「載せない」と宣言する否定文、および感想への言及は可。ビフォーアフター表は不可。
-chk(not re.search(r"ビフォー\s*[・/]?\s*アフター|Before\s*[→/]\s*After", LP, re.I),
-    "ビフォーアフターの見せ方をしていない（§4）")
-# 感想に言及するなら、打消し表示とセットであること（景表法）
-if re.search(r"感想|お客様の声", LP):
-    chk("個人差" in LP and re.search(r"(保証するものではありません|保証しません)", LP),
-        "感想に触れる箇所に打消し表示（個人差・保証しない）がある")
-
-# ── 3b. お客様の声：不採用9件を指していないか ──────────────────
-# 17件を全件実読して仕分けた（chiero_site_docs/testimonials_triage_2026-07-16.md）。
-# 薬機法（効能効果の体験談は注釈付きでもNG）・景表法（数字入り成果）・
-# 断定的判断・スピ語彙に触れるものは、リンクでも指さない。
-BANNED_VOICES = {
-    "1834856533982953671": "医師法（『医者として診断と投薬、手術』）",
-    "1837768894276112549": "景表法（2ヶ月410万・売上4倍6倍）",
-    "1841049551303819660": "怪しさゼロと衝突（引き寄せの法則・勝手に叶う）",
-    "1842128172747489367": "薬機法（四十肩の痛みが消えた・寝れるようになった）",
-    "1858032105990795446": "薬機法（誘導瞑想によるストレスの解消）",
-    "1887336849489994170": "消費者契約法4条（なぜか結果が出てしまう・全人類受けたほうがいい）",
-    "1935243750772719844": "景表法（単価400万以上の案件受注）",
-    "2014524068188610660": "薬機法・最重（身体的な不具合にも効果が出ます・施術）",
-    "2023659336594321654": "薬機法周辺＋直近すぎる（メタ認知が爆発的に・2026年2月）",
-}
-for sid, why in BANNED_VOICES.items():
-    chk(sid not in LP, f"不採用の声を指していない（…{sid[-6:]}）", why)
-# プロフィールへ直リンクすると不採用9件も等しく晒される
-chk(not re.search(r'href="https://x\.com/chiero_piero/?"', LP),
-    "Xのプロフィールへ直リンクしていない", "不採用9件も一緒に晒される。個別ポストへ飛ばすこと")
-chk(not re.search(r"限定\s*\d|残り\s*\d|今だけ|先着", LP), "希少性の演出が無い（§4）")
-# 消費者契約法4条が禁じるのは「将来の不確実な事項について断定的判断を提供すること」。
-# 「必ずご確認ください」のような注意喚起は逆に消費者保護なので許す。
-# 成果・利益・変化に「必ず/絶対」が掛かる形だけを捕まえる。
-chk(not re.search(r"(必ず|絶対に|確実に)[^。]{0,12}(儲|稼|成果|結果|売上|利益|成功|上が|変わ|解決)"
-                  r"|(成果|結果|売上|利益)[^。]{0,10}(保証します|お約束します)", LP + TK),
-    "断定的判断の提供が無い（消費者契約法4条）")
-chk("向いていないこと" in LP, "向いていない相手を明示している（売り込みの反対）")
-# 2026-07-16 本人指示で「その場では契約しません」を廃止（その場で決めたい人を止めない）。
-# かわりの不変条件: 急かさないこと・その場でも後日でも条件が同じことの2点。
-# これが消えると勧誘圧の遮断が消える＝売り込み面に一歩近づくので、ゲートで守る。
-chk("急かすことはありません" in LP, "急かさない旨がある（勧誘圧の遮断）")
-chk("その場で決めても" in LP and "条件は同じ" in LP,
-    "その場でも後日でも条件が同じ旨がある（駆け込み割引で煽らない証拠）")
-
-# ── 4. 事実の正確さ（全公開物で横断チェック済みの2件） ──────────
-for src, name in ((LP, "LP"), (TK, "特商法")):
-    chk("王様のブランチ" not in src, f"『王様のブランチ』を書いていない（{name}）")
-    chk("167冊" not in src, f"「167冊」を書いていない（{name}）")
-chk("セルクル今泉404号室" in TK, "登記どおりの住所（特商法）")
-chk("中田 光" in TK, "代表者名（特商法）")
-
-# ── 4b. 見せないと決めた事実（2026-07-16 本人指示）────────────────
-# 生年＝年齢は公開していない。法人番号も出さない方針（特商法の必須項目ではない）。
-# 一度消しても、別の面から戻ってくるのがこの類の事故（167冊・王様のブランチ）。
-for src, name in ((LP, "LP"), (TK, "特商法")):
-    chk("1993" not in src, f"生年（1993）が無い（{name}）", "年齢は公開しない方針")
-    chk("7290001091210" not in src, f"法人番号が無い（{name}）", "出さない方針。特商法の必須項目でもない")
-# 「33歳以下の若手リーダーのコミュニティ」= GSCの選出条件の説明であって本人の年齢ではない。
-# 本人に掛かる形（◯歳の／今年◯歳 等）と birthDate だけを捕まえる。
-# 「◯歳で起業」のような書き方は、設立年と併記されると生年が逆算できる＝年齢の公開と同じ。
-# 年齢が本人に掛かる形すべてを捕まえ、GSCの「33歳以下の…コミュニティ」だけを通す。
-chk(not re.search(r"birthDate|\d{2}\s*歳(?!以[下上])", LP),
-    "本人の年齢・生年を逆算できる表記が無い（LP）",
-    "年齢は公開しない方針。『◯歳で起業』も設立年から生年が割れる")
-
-# ── 4c. 権威性は検証手段とセットでのみ載せる ────────────────────
-# 肩書きだけ並べると「怪しさ」が増える。各 .cred には根拠の一文(.cn)を必ず添える。
-creds = re.findall(r'<div class="cred">(.*?)</div>', LP, re.S)
-if creds:
-    chk(all('class="cn"' in c for c in creds),
-        f"権威性の{len(creds)}件すべてに根拠・検証手段が添えてある",
-        "肩書きだけの列挙は不可")
-
-# ── 5. 特商法11条の必須項目 ──────────────────────────────
-REQUIRED = ["販売事業者", "代表者", "所在地", "電話番号", "販売価格",
-            "お支払方法", "お支払時期", "役務の提供時期", "キャンセル", "必要料金"]
-for item in REQUIRED:
-    chk(item in TK, f"特商法の必須項目「{item}」")
-
-# ── 6. 価格がLPと特商法で一致しているか ───────────────────────
-def prices(s):
-    return set(re.findall(r"(?:50,000|1,050,000|1,100,000|2,200,000)円", s))
-WANT = {"50,000円", "1,050,000円", "1,100,000円", "2,200,000円"}
-chk(prices(LP) == prices(TK) == WANT,
-    "4つの価格がLPと特商法で一致", f"LP={sorted(prices(LP))} 特商法={sorted(prices(TK))}")
-chk("税込" in LP and "税込" in TK, "総額表示（税込）が両方にある")
-# 決済ページは「実際に請求する額」を出す面なので、想定外の金額が1つでも混ざったら止める。
-# 上のprices()は既知4額しか拾わないため、疎通テスト用の10,000円などは素通りしてしまう。
-for name, src in PAY.items():
-    found = set(re.findall(r"[0-9]{1,3}(?:,[0-9]{3})+円", src))
-    chk(found and found <= WANT, f"{name} の金額が公開4価格の範囲内",
-        f"想定外の金額: {sorted(found - WANT)}（テスト用の額を本番の面に残していないか）")
-    chk("税込" in src, f"{name} に総額表示（税込）がある")
-# 5万＋105万＝110万 の算数は、金額を並べる面すべてで合っていること
-chk("お支払総額" in AD and "1,100,000円" in AD and "二重にかかることはありません" in AD,
-    "advisory に内訳（5万＋105万＝110万・二重取りなし）が明記されている")
-chk("二重にかかることはありません" in AP, "apply にも二重取りなしが明記されている")
-# サンクスページは「日程へ渡す」ためだけに存在する。導線が消えたら決済が宙に浮く。
-chk("lin.ee/YCCoRsBu" in TH, "thanks に公式LINEの導線がある", "決済後に日程へ渡す手段が消える")
-chk("chieropiero@gmail.com" in TH, "thanks にLINE以外の連絡手段（メール）もある")
-chk(not re.findall(r"[0-9]{1,3}(?:,[0-9]{3})+円", TH),
-    "thanks に金額を書いていない", "1本のリダイレクト先を全リンクで共用するため、特定の金額は書けない")
-# 決済後の導線は4面で食い違わせない（メールだけ／LINEだけ、が混在すると案内が割れる）
-for name, src in (("apply", AP), ("advisory", AD), ("特商法", TK)):
-    chk("LINE" in src, f"{name} の日程調整の記述に公式LINEが入っている")
-
-# ── 3b-2. LPのCTAと「進め方」が、いま生きているレールと一致しているか ──────────
-# 導線だけ切り替えて説明を直し忘れる（またはその逆）と、書いてある手順どおりに進めない。
-cta = re.search(r'<a class="btn" href="([^"]+)"', LP)
-chk(bool(cta), "LPにCTAボタンがある")
-if cta:
-    if LIVE_APPLY_RAIL == "utage":
-        chk(cta.group(1) == UTAGE_APPLY_URL,
-            "LPのCTAがUTAGEの申込ページを指している（解約までは据え置き）",
-            f"LIVE_APPLY_RAIL='utage' なのに {cta.group(1)}")
-        chk("空いている日程を選んで" in LP and "その場で日程を選び" in LP,
-            "LPの進め方がUTAGEのやり方（カレンダーで選んでその場で決済）で書かれている",
-            "CTAはUTAGEなのに、説明が自前フォームの流れになっている")
-    else:
-        chk(cta.group(1) == "apply/",
-            "LPのCTAが自前の申込ページ（apply/）を指している",
-            f"LIVE_APPLY_RAIL='self' なのに {cta.group(1)}")
-        chk("空いている日程を選んで" not in LP,
-            "LPの進め方からカレンダーの記述が消えている",
-            "自前フォームにカレンダーは無い。UTAGE時代の説明が残っている")
-        chk("公式LINE" in LP, "LPの進め方が公式LINEでの日程調整になっている")
-        chk(UTAGE_APPLY_URL not in LP + TK + AP + AD + TH,
-            "解約後の面にUTAGEのURLが残っていない", "解約後は404になる")
-
-# ── 3c. 対応時間（2026-08-03 本人確定：10:00〜12:00・土日祝の区別なし）─────
-# 旧・特商法は「平日 10:00〜17:00（土日祝を除く）」だった。真逆なので、
-# 1面でも旧記載が生き残ると、その面だけ嘘になる。4面すべてで同時に守る。
-for name, src in (("LP", LP), ("apply", AP), ("advisory", AD), ("特商法", TK)):
-    chk("10:00〜12:00" in src, f"{name} に対応時間 10:00〜12:00 がある")
-    chk("土日祝を除く" not in src, f"{name} に旧記載『土日祝を除く』が残っていない",
-        "土日祝の区別はない。1面でも残ると特商法と食い違う")
-# 土日祝も動くので「営業日」は数え方が変わる。単位を暦日に統一しておく。
-for name, src in ALL_PAGES:
-    chk("営業日" not in src, f"{name} に「営業日」が残っていない",
-        "土日祝を含めて対応するため、営業日=暦日。誤解を生む単位は使わない")
-# 5万＋105万＝110万。この算数が壊れたら両方の面で嘘になる。
-chk("合計1,100,000円" in LP and "お支払総額は1,100,000円" in TK,
-    "初回相談5万＋追加105万＝110万 がLPと特商法の両方に明記されている")
-
-# ── 6d. 二重価格表示（景表法）──────────────────────────────
-# 取り消し線の2,200,000円は「過去の販売価格」ではない（販売実績ゼロ）。
-# 「4ヶ月目以降に継続する場合の価格」＝将来実際に請求する価格として書けば
-# 有利誤認にならない。根拠の一文が消えたら公開させない。
-if "line-through" in LP or "was" in LP:
-    chk("4ヶ月目以降に継続される場合の3ヶ月あたりの価格です" in LP,
-        "取り消し線の2,200,000円に根拠が併記されている（景表法の有利誤認回避）",
-        "「通常価格」として販売実績のない価格に取り消し線を引くと二重価格表示になる")
-chk("2,200,000円" in TK, "継続時の価格が特商法にも書かれている（継続契約の条件は必須表示）")
-# 更新の設計（2026-07-15本人確定）: 継続が前提だが、サイレント自動更新ではなく
-# 最終回の面談で必ず意思確認する。この2点が両面から消えたら公開不可——
-# 「意思確認なし課金」に見えれば定期購入規制、確認の事実が消えれば実態との不一致。
-chk("面談" in TK and "継続のご意思を確認" in TK,
-    "更新前の面談での意思確認が特商法にある")
-chk("自動で更新・課金されることはありません" in TK,
-    "意思確認なしの自動課金がない旨が特商法に明記されている")
-chk("続けるかどうかを一緒に決めます" in LP and "自動で課金が続くことはありません" in LP,
-    "LPのFAQにも面談確認と自動課金なしがある")
-chk("最大24回" in LP and "最大24回" in TK, "分割の上限24回がLPと特商法で一致")
-
-# ── 6e. 「初回セッション」の呼称が残っていないか（本人指示で「初回相談」へ）──
-for src, name in ((LP, "LP"), (TK, "特商法")):
-    chk("初回セッション" not in src, f"「初回セッション」の旧称が残っていない（{name}）")
-
-# ── 6b. 本人から受け取った3つの事実が、両ページで食い違わないか ──────
-TEL, MAIL = "070-8336-0789", "chieropiero@gmail.com"
-chk(TEL in TK, f"電話番号 {TEL} が特商法にある")
-chk(MAIL in TK, f"メール {MAIL} が特商法にある")
-chk(MAIL in LP, "申込ボタンの宛先が特商法のメールと同一", "LPのmailtoが特商法と違う")
-# 「中途解約は返金なし」はLP(FAQ)と特商法で必ず一致させる。片方だけだと不実告知になる。
-chk(re.search(r"中途解約.{0,40}返金.{0,10}(いたしません|ありません)", TK, re.S),
-    "特商法に中途解約の返金なしが明記されている")
-# 初回相談は「返金しない代わりに日程変更を受ける」設計（2026-08-03本人確定）。
-# 返金なしだけが残って変更の受け皿が消えると、ただの取り切りになる。対で守る。
-for name, src in (("特商法", TK), ("apply", AP)):
-    chk("24時間前" in src, f"{name} に日程変更の受付期限（24時間前）がある")
-    chk(re.search(r"(ご都合による|お客様のご都合).{0,40}返金", src),
-        f"{name} に客都合の返金なしが明記されている")
-chk("日程のご変更で対応" in TK and "日程のご変更で対応" in AP,
-    "返金なしとセットで『日程変更で対応する』が両面にある",
-    "返金なしだけを書くと、代替手段のない取り切りに見える")
-chk(re.search(r"途中でやめたら.{0,300}ありません", LP, re.S),
-    "LPのFAQでも返金なしを明言している", "特商法にだけ書くのは不実告知に近い")
-
-# ── 6c. ページが名乗るURLと、実際に配信されている場所が一致しているか ──
-# CNAMEを置いた=work.chiero.jpで配信、置いていない=github.io配下。
-# canonical/og:url がこれとズレると、共有リンクが死んだURLをプレビューする（実際にやった）。
-LIVE = "https://work.chiero.jp/" if (ROOT / "CNAME").exists() else "https://kounkt.github.io/chiero-work/"
-urls = re.findall(r'rel="canonical" href="([^"]+)"', LP + TK + AP + AD) + \
-       re.findall(r'property="og:url" content="([^"]+)"', LP)
-chk(urls and all(u.startswith(LIVE) for u in urls),
-    f"canonical/og:url が配信場所（{LIVE}）と一致",
-    f"CNAME{'あり' if (ROOT/'CNAME').exists() else 'なし'}なのに {[u for u in urls if not u.startswith(LIVE)]}")
-
-# ── 7. 法定返品権の説明が正しいか ─────────────────────────
-# 15条の3は「売買契約＝商品・特定権利」のみ。役務には適用されない。
-if "15条の3" in TK or "法定返品権" in TK:
-    chk("役務の提供であるため" in TK and "対象ではありません" in TK,
-        "法定返品権が役務に適用されない旨を正しく書いている")
-
-# ── 8. リンク切れ ───────────────────────────────────
-# 相対リンク（../）は、その href が書かれているファイルの位置から解決する。
-# ROOT基準で見ると特商法の「../」を誤検知する。
-# 拡張子つき（favicon.svg 等）は実ファイル、拡張子なしはディレクトリ＋index.html。
-for src, base in ((LP, ROOT), (TK, ROOT / "tokushoho"),
-                  (AP, ROOT / "apply"), (AD, ROOT / "advisory"),
-                  (TH, ROOT / "thanks")):
-    for href in set(re.findall(r'href="((?!https?:|mailto:|#)[^"#]+)"', src)):
-        # 未解決のUnivaPayリンクは上のプレースホルダ検査が報告済み。ここで二重に鳴らさない
-        if href in PLACEHOLDERS:
-            continue
-        p = (ROOT / href.lstrip("/")) if href.startswith("/") else (base / href)
-        p = p if pathlib.Path(href).suffix else p / "index.html"
-        where = base.name or "/"
-        chk(p.resolve().exists(), f"内部リンク {href}（{where}から）", f"リンク先が無い: {p}")
-
-# ── 9. アイコンとog画像の実在（Chromeでアイコンが出ない事故の再発防止）──
-for f in ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "assets/og.png"]:
-    chk((ROOT / f).exists(), f"{f} が存在する", "参照だけあって実体が無いと静かに壊れる")
-chk('rel="icon"' in LP and 'rel="icon"' in TK, "faviconがLPと特商法の両方で参照されている")
-chk("summary_large_image" in LP and "og:image" in LP, "og:imageとlarge_imageカードがある（共有時の見え方）")
-
-# ── 10. アクセス統計ビーコンのゲート（G1/G3/G4。chiero_analytics/DIRECTIVE.md §2 Step4）──
-# work.chiero.jp は自前の privacy を持たず chiero.jp/privacy を指す。G2（告知の整合）は
-# chiero_site 側で守る。ここでは「ビーコンが正しく1本」「他社トラッカー・Cookieバナー無し」。
-CF_TOKEN = "3bd0c55b54044e909e20029c110432d1"          # work.chiero.jp
-CF_PAGES = ["index.html", "tokushoho/index.html", "404.html",
-            "apply/index.html", "advisory/index.html", "thanks/index.html"]
-BEACON = "static.cloudflareinsights.com/beacon.min.js"
-OTHER_TRACKERS = ["googletagmanager.com", "gtag(", "google-analytics.com",
-                  "connect.facebook.net", "fbq(", "static.hotjar.com",
-                  "clarity.ms", "matomo", "plausible.io", "segment.com"]
-COOKIE_BANNER = ["cookieconsent", "cookie-consent", "cookiebanner",
-                 "cookie-banner", "cookiebot", "onetrust", "gdpr-banner"]
-
-for rel in CF_PAGES:
-    p = ROOT / rel
-    if not p.exists():
-        ng.append(f"G1 ビーコン対象ページが無い: {rel}")
-        continue
-    t = p.read_text(encoding="utf-8")
-    chk(BEACON in t and CF_TOKEN in t, f"G1 {rel} にビーコン（正しいトークン）がある",
-        "beacon.min.js と work.chiero.jp トークンの両方が要る")
-    chk(t.count(BEACON) <= 1, f"G1 {rel} のビーコンは1本だけ", "二重計測しない")
-    hit = [w for w in OTHER_TRACKERS if w in t]
-    chk(not hit, f"G3 {rel} に他社トラッカーが無い", f"検出: {hit}")
-    hitb = [w for w in COOKIE_BANNER if w.lower() in t.lower()]
-    chk(not hitb, f"G4 {rel} にCookie同意バナーが無い", f"検出: {hitb}")
-
-print("=" * 60)
-print(f"✅ {len(ok)} 件")
-for x in ok:
-    print("   ", x)
-if warn:
-    print(f"\n⚠️  {len(warn)} 件")
-    for x in warn:
-        print("   ", x)
-print(f"\n{'❌' if ng else '✅'} 未解決 {len(ng)} 件")
-for x in ng:
-    print("   ", x)
-print("=" * 60)
-print("\n🚫 公開不可" if ng else "\n🟢 公開してよい")
-sys.exit(1 if ng else 0)
+from pathlib import Path
+from html.parser import HTMLParser
+from urllib.parse import urlsplit,unquote
+import json,re,sys
+ROOT=Path(__file__).resolve().parent.parent
+OLD_FEE=re.compile(r'1[,，]?100[,，]?000|2[,，]?200[,，]?000|1[,，]?050[,，]?000|(?:110|220|105)万|366[,，]?667|733[,，]?333')
+OLD_PAYMENT=['https://univa.cc/K9JH3K','https://univa.cc/z8WmPn']
+class Page(HTMLParser):
+ def __init__(self,s):
+  super().__init__();self.tags=[];self.feed(s)
+ def handle_starttag(self,t,a):self.tags.append((t,dict(a)))
+ def attrs(self,t):return [a for k,a in self.tags if k==t]
+ def ids(self):return [a['id'] for _,a in self.tags if a.get('id')]
+ def meta(self,n):return next((a.get('content','') for a in self.attrs('meta') if a.get('name',a.get('property'))==n),'')
+def verify():
+ errors=[];checks=0
+ def check(ok,label):
+  nonlocal checks;checks+=1
+  if not ok:errors.append(label)
+ for f in ROOT.rglob('*'):
+  if '.git' in f.parts or 'tools' in f.parts or f.suffix not in ('.html','.txt','.json','.js','.xml','.md'):continue
+  s=f.read_text();rel=str(f.relative_to(ROOT))
+  check(not OLD_FEE.search(unquote(unquote(s))),rel+' retired continuation fees absent')
+  check(not any(x in s for x in OLD_PAYMENT),rel+' retired generic continuation checkout absent')
+  if f.suffix!='.html' or f.name!='index.html':continue
+  p=Page(s)
+  check(len(p.attrs('h1'))==1 and len(p.ids())==len(set(p.ids())),rel+' one H1 / unique IDs')
+  check(not re.search(r'@[A-Z_:]+@|CONTACT_EMAIL|UNIVAPAY_LINK_',s),rel+' no unresolved template placeholders')
+  if 'workbook/thanks' not in rel:
+   check('https://work.chiero.jp/'+rel.removesuffix('index.html') in s,rel+' canonical host')
+  for tag,a in p.tags:
+   ref=a.get('href') if tag in ('a','link') else a.get('src') if tag in ('script','img') else None
+   if not ref:continue
+   u=urlsplit(ref)
+   if u.scheme not in ('','https','http') or (u.netloc and u.netloc!='work.chiero.jp'):continue
+   target=(ROOT/unquote(u.path.lstrip('/'))) if u.path.startswith('/') or u.netloc else f.parent/unquote(u.path)
+   if not u.path:target=f
+   elif target.is_dir():target=target/'index.html'
+   check(target.is_file(),rel+' link '+ref)
+   if u.fragment and target.suffix=='.html' and target.is_file():check(unquote(u.fragment) in Page(target.read_text()).ids(),rel+' anchor '+ref)
+  for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>',s,re.S):
+   try: json.loads(block)
+   except ValueError:errors.append(rel+' invalid JSON-LD')
+  check(s.count('static.cloudflareinsights.com/beacon.min.js')==1,rel+' one analytics beacon')
+  check('AggregateRating' not in s,rel+' no invented aggregate rating')
+ for rel in ['index.html','apply/index.html','advisory/index.html','tokushoho/index.html','ai-prompt.txt','assets/renewal/work-prompt.txt','llms.txt']:
+  s=(ROOT/rel).read_text()
+  check('個別見積もり' in s,rel+' quote-based continuation')
+  check('50,000' in s or '5万円' in s,rel+' initial fee retained')
+  check('充当' in s,rel+' initial-fee credit retained')
+ for rel in ['index.html','advisory/index.html','tokushoho/index.html','ai-prompt.txt','llms.txt']:
+  s=(ROOT/rel).read_text();check('税込総額' in s and any(t in s for t in ('事前','契約前','期間の終了前')),rel+' total before agreement')
+  check('自動更新・自動課金' in s,rel+' explicit no automatic renewal/charge')
+ s=(ROOT/'index.html').read_text();p=Page(s)
+ check('quote' in p.ids() and '初回相談のお申し込み・お支払いは不要' in s,'quote inquiry available before paid consultation')
+ check('https://lin.ee/YCCoRsBu' in s and 'mailto:work@chiero.jp' in s,'working quote contact destinations')
+ check('https://apply.chiero.jp/p/UIA2tAAbI1rW' in s,'current initial booking path unchanged')
+ s=(ROOT/'apply/index.html').read_text();check('https://univa.cc/4L4YkZ' in s,'legacy initial-only checkout retained')
+ s=(ROOT/'advisory/index.html').read_text();check('univa.cc' not in s,'advisory requires an individual invoice')
+ tk=(ROOT/'tokushoho/index.html').read_text()
+ for item in ['販売事業者','代表者','所在地','電話番号','work@chiero.jp','販売価格','お支払方法','お支払時期','役務の提供時期','キャンセル','必要料金']:
+  check(item in tk,'commercial disclosure '+item)
+ check('遅滞なく' in tk and '電子メール' in tk,'quote terms request before commitment')
+ check('未実施分を返金' in tk and '24時間前' in tk,'existing cancellation conditions retained')
+ check((ROOT/'ai-prompt.txt').read_bytes()==(ROOT/'assets/renewal/work-prompt.txt').read_bytes(),'copied and downloadable AI summary agree')
+ schema=json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>',(ROOT/'index.html').read_text(),re.S)[1])
+ offers=[n['offers'] for n in schema['@graph'] if 'offers' in n]
+ check(len(offers)==1 and offers[0]['price']=='50000' and offers[0]['priceCurrency']=='JPY' and '初回' in offers[0]['name'],'structured offer only for fixed-price initial consultation')
+ print(f'{checks} checks; {len(errors)} failures')
+ for e in errors:print('FAIL:',e)
+ return bool(errors)
+if __name__=='__main__':sys.exit(verify())
