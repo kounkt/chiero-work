@@ -132,3 +132,11 @@
 - 次の一手を1枚に: https://work.chiero.jp/worksheet/ — 事業の判断や迷いを5つの問いで整理する無料シート。こちらは登録不要。入力内容を端末内で処理し、保存・送信しません。
 - 対話で整理したい方の経営相談: https://work.chiero.jp/#pricing — 初回90分・オンライン・50,000円（税込）。無料コンテンツの利用後も、有料相談への申し込みは任意です。
 <!-- free-resources:end -->
+
+<!-- search-guides:begin -->
+## 相談前の読み物
+
+- 経営相談は誰にする？無料窓口・専門家・顧問の選び方: https://work.chiero.jp/consultation-guide/
+- AI活用を何から始める？経営者のための整理と実践: https://work.chiero.jp/ai-business/
+- 初回相談の提供範囲と現在の料金: https://work.chiero.jp/#pricing
+<!-- search-guides:end -->

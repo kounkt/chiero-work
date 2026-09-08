@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://work.chiero.jp/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,6 +12,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-<url><loc>https://work.chiero.jp/worksheet/</loc><lastmod>2026-09-08</lastmod></url>
-<url><loc>https://work.chiero.jp/workbook/</loc><lastmod>2026-09-08</lastmod></url>
+<url><loc>https://work.chiero.jp/worksheet/</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://work.chiero.jp/workbook/</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://work.chiero.jp/consultation-guide/</loc><lastmod>2026-09-09</lastmod></url>
+<url><loc>https://work.chiero.jp/ai-business/</loc><lastmod>2026-09-09</lastmod></url>
 </urlset>
