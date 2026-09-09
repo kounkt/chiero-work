@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap');
+
+/* Mirrors the corporate header in chiero.jp/assets/renewal/site.css.
+   Scoped class names keep the LP's content and footer typography intact. */
+.chiero-header {
+  --red: #e60012;
+  --ink: #0e0e0e;
+  --line: #dcdcdc;
+  --sans: 'Noto Sans JP', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  min-height: 94px;
+  background: rgba(255,255,255,.97);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font: 400 16px/1.85 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+.chiero-header :focus-visible { outline: 3px solid var(--red); outline-offset: 5px; }
+.chiero-brand { display: flex; align-items: center; gap: 10px; flex: none; line-height: 1; }
+.chiero-brand img { width: 54px; height: 54px; object-fit: contain; }
+.chiero-brand > span { font-family: Arial, sans-serif; font-size: 1.65rem; letter-spacing: -.07em; font-weight: 900; }
+.chiero-brand b { color: var(--red); }
+.chiero-brand small { display: block; letter-spacing: .04em; font-size: .6875rem; font-family: var(--sans); font-weight: 500; margin-top: 8px; }
+.chiero-desktop-nav { display: flex; align-items: center; gap: 27px; font-size: .875rem; font-weight: 500; margin-left: auto; }
+.chiero-desktop-nav a:not(.chiero-nav-cta) { position: relative; padding-block: 6px; }
+.chiero-desktop-nav a:not(.chiero-nav-cta)::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; transform: scaleX(0); transform-origin: left; background: var(--red); transition: transform .25s; }
+.chiero-desktop-nav a:hover::after, .chiero-desktop-nav a[aria-current]::after { transform: scaleX(1); }
+.chiero-nav-cta { background: var(--ink); color: white; padding: 12px 18px; display: flex; gap: 20px; }
+.chiero-nav-cta:hover { background: var(--red); }
+.chiero-mobile-menu { display: none; }
+.chiero-language-switch { font: 700 .75rem/1 Arial, sans-serif; border: 1px solid var(--line); padding: 10px; flex: none; margin-left: 16px; }
+.chiero-language-switch:hover { border-color: var(--red); color: var(--red); }
+
+@media (max-width: 1150px) {
+  .chiero-header { padding-inline: 24px; }
+  .chiero-desktop-nav { gap: 18px; }
+}
+@media (max-width: 960px) {
+  .chiero-desktop-nav { display: none; }
+  .chiero-mobile-menu { display: block; }
+  .chiero-mobile-menu summary { list-style: none; font-size: .875rem; padding: 10px 0; cursor: pointer; }
+  .chiero-mobile-menu summary::-webkit-details-marker { display: none; }
+  .chiero-mobile-menu summary span { margin-left: 10px; }
+  .chiero-mobile-menu nav { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-direction: column; padding: 16px 32px 28px; background: white; border-bottom: 1px solid var(--line); box-shadow: 0 16px 18px #0001; }
+  .chiero-mobile-menu nav a { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
+  .chiero-mobile-menu nav a.chiero-nav-cta { margin-top: 15px; padding: 13px 16px; }
+  .chiero-header { min-height: 80px; padding-block: 12px; }
+  .chiero-brand img { width: 46px; height: 46px; }
+}
+@media (max-width: 680px) {
+  .chiero-header { padding-inline: 16px; }
+  .chiero-brand > span { font-size: 1.4rem; }
+  .chiero-brand small { font-size: .625rem; }
+}
+@media (min-width: 961px) and (max-width: 1250px) {
+  .chiero-desktop-nav { gap: 15px; font-size: .8125rem; }
+  .chiero-nav-cta { gap: 12px; padding-inline: 14px; }
+}
+@media (max-width: 1000px) {
+  .chiero-language-switch { margin-left: auto; margin-right: 20px; }
+}
+@media (max-width: 760px) {
+  .chiero-language-switch { margin-right: 12px; }
+}

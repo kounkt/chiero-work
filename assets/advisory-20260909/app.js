@@ -3,7 +3,7 @@
   if (header && 'ResizeObserver' in window) {
     new ResizeObserver(() => document.documentElement.style.setProperty('--header-offset', `${header.offsetHeight + 18}px`)).observe(header);
   }
-  const menu = document.querySelector('.mobile-menu');
+  const menu = document.querySelector('.chiero-mobile-menu');
   menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.open = false));
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menu?.open) { menu.open = false; menu.querySelector('summary').focus(); }
