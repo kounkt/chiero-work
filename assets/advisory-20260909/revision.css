@@ -84,3 +84,7 @@
 
 .legacy-anchor{display:block;height:0;scroll-margin-top:var(--header-offset,100px)}
 #quote,#terms,#ask{scroll-margin-top:var(--header-offset,100px)}
+
+/* Match the corporate ABOUT heading: Noto Sans JP, weight 800. */
+.hero h1{font-family:"Noto Sans JP",sans-serif;font-weight:800}
+@media(max-width:360px){.hero h1{font-size:6.6vw}}
