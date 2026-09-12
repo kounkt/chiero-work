@@ -1,0 +1,23 @@
+name: Lead delivery scheduler
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: chiero-lead-delivery
+  cancel-in-progress: false
+jobs:
+  wake-due-deliveries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Wake eligible email deliveries
+        env:
+          LEAD_TICK_TOKEN: ${{ secrets.CHIERO_LEAD_TICK_TOKEN }}
+        run: |
+          test -n "$LEAD_TICK_TOKEN"
+          curl --silent --show-error --fail --max-time 40 --retry 2 \
+            --request POST \
+            --header "Authorization: Bearer $LEAD_TICK_TOKEN" \
+            https://chiero-workbook-service.nkt1214.workers.dev/internal/tick
