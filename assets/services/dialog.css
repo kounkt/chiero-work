@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+dialog{border:0;padding:40px;max-width:530px;width:calc(100% - 32px);max-height:90dvh;overflow:auto;color:var(--ink);font-family:var(--sans);box-shadow:0 25px 100px #0003}
+dialog::backdrop{background:#15151580;backdrop-filter:blur(4px)}
+body.dialog-open{overflow:hidden}
+.dialog-close{position:absolute;right:16px;top:10px;background:transparent;border:0;font-size:28px;padding:5px 10px}
+dialog h2{font-size:29px;line-height:1.5;margin:25px 0 15px}
+dialog>p:not(.eyebrow){font-size:13px}
+.booking-options{padding:0;border:0;margin:25px 0}
+.booking-options legend{font-size:12px;font-weight:700;margin-bottom:12px}
+.booking-options label{display:flex;gap:12px;align-items:center;padding:14px 12px;border:1px solid #dedbd6;margin-top:8px;font-size:13px;cursor:pointer}
+.booking-options label:has(input:checked){border-color:var(--red);background:#fff7f8}
+.booking-options input{accent-color:var(--red);width:16px;height:16px}
+.booking-summary{padding:20px 0;border-top:1px solid var(--line);display:grid;gap:8px}
+.booking-summary>span{font-size:11px;color:#666}
+.booking-summary strong{font-size:22px}
+.booking-summary i{font-style:normal;color:#ccc;margin:0 10px}
+.booking-summary small{font-size:11px}
+.booking-summary p{font-size:11px}
+.booking-summary+.button{width:100%}
+.preview-disclosure{font-size:10px!important;color:#777;margin-top:14px}
+#booking-result{font-size:13px;padding-top:15px}
+#booking-result:empty{display:none}
+.dialog-close{position:sticky;top:0;float:right;right:auto;margin:-16px -10px 0 0;min-width:44px;min-height:44px;z-index:2;background:white}
+#booking-dialog .button{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border:0;background:#e60024;color:white;font-size:13px;font-weight:700;}
+@media(max-width:760px){dialog{padding:28px 22px}dialog h2{font-size:24px}}
+#booking-dialog .booking-next{display:flex;align-items:center;justify-content:space-between;width:100%;padding:19px 22px;background:#e60024;color:#fff;font-size:13px;font-weight:700;line-height:1.5;text-decoration:none}#booking-dialog .service-note{font-size:11px;line-height:1.8;color:#626262;margin-top:16px}#booking-dialog .booking-summary a{text-decoration:underline}
+
+#booking-dialog{--red:#e60024;--ink:#171717;--line:#ddd;--sans:Arial,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-family:var(--sans)}
