@@ -1,0 +1,38 @@
+/* work.chiero.jp：公式サイトに合わせて足す分だけ（2026-10-03）。今の見た目はそのまま。 */
+:root{--ball:radial-gradient(circle at 34% 30%,#FF7A7E 0,#E60012 52%,#BD0010 100%);--top-rail:clamp(12px,2.9vw,44px)}
+/* 見出しの書体：Noto Sans JP Bold（見出しの字だけを切り出した Webフォント・SIL OFL 1.1） */
+@font-face{font-family:"CHIERO Sans";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/chiero-sans-700-work.woff2?v=00a3067c7b21) format("woff2")}
+h1,h2,h3,.button,.service-contact,.wordmark{font-family:"CHIERO Sans","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+html[lang="ja"] .fluid-mode .fluid-page-hero h1{font-family:"CHIERO Sans",Arial,"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+/* 赤い点 */
+.dot{position:fixed;left:0;top:0;width:12px;height:12px;border-radius:999px;background:var(--ball);box-shadow:0 2px 6px rgba(230,0,18,.3);z-index:60;pointer-events:none;opacity:0;will-change:transform,width,height}
+.js-dot .dot{opacity:1}
+.dot.on-red{background:radial-gradient(circle at 34% 30%,#fff 0,#fff 55%,#e9e9e9 100%);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.trail{position:fixed;inset:0;width:100%;height:100%;z-index:59;pointer-events:none;overflow:visible;mix-blend-mode:difference;opacity:0;transition:opacity .35s}
+.trail polyline{fill:none;stroke:#fff;stroke-width:1;stroke-opacity:.55;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.js-dot .trail.is-on{opacity:1;transition:opacity .15s}
+.js-dot .dot.is-handed{opacity:0;transition:opacity .25s}
+.dot::after{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1px solid #fff;mix-blend-mode:difference;opacity:0;pointer-events:none}
+.dot.pulse::after{animation:top-ring .9s cubic-bezier(.2,.7,.1,1)}
+@keyframes top-ring{from{transform:scale(1);opacity:.7}to{transform:scale(3.6);opacity:0}}
+.dot-anchor{flex:none;font-style:normal}
+i.dot-anchor{display:inline-block;border-radius:999px;width:12px;height:12px}
+.dot-anchor[data-dot-static]:not(.wm-o):not(.red-dot){background:var(--ball)}
+.js-dot i.dot-anchor,.js-dot .red-dot.dot-anchor{background:transparent !important}
+.eyebrow.has-dot{position:relative}
+.eyebrow.has-dot>.dot-anchor{position:absolute;left:calc(var(--top-rail) * -1);top:50%;margin-top:-6px}
+.wordmark .wm-o{position:relative;display:inline-block}
+.wordmark .wm-o::before{content:"";position:absolute;left:50%;top:50%;width:.82em;height:.82em;margin:-.41em 0 0 -.41em;border-radius:50%;background:var(--ball);box-shadow:0 .05em .14em rgba(0,0,0,.25);transform:scale(0)}
+.js-dot .wordmark .wm-o::before{transition:transform .7s cubic-bezier(.3,1.35,.5,1)}
+.js-dot .wordmark .wm-o.is-landed::before{transform:scale(1)}
+img.sig-illust{object-fit:cover;background:#222;border-radius:50%;border:3px solid #fff;box-shadow:0 10px 22px rgba(14,14,14,.2),0 2px 5px rgba(14,14,14,.12)}
+/* スマホ・タブレット：押す所の高さを 44px 以上に */
+@media (max-width:960px){
+  .service-nav a,.service-nav button,.footer nav a,.footer-legal a,.line-gift-email a{display:inline-flex;align-items:center;min-height:44px}
+  .hub-gift-link,.text-button,.hub-line-last a,.footer .wordmark{display:inline-flex;align-items:center;min-height:44px}
+  .service-menu nav{gap:2px}
+  .service-menu nav a,.service-menu nav button{display:flex;align-items:center;min-height:44px}
+}
+@media (max-width:680px){
+  .eyebrow.has-dot>.dot-anchor{width:8px;height:8px;margin-top:-4px;left:-13px}
+}
