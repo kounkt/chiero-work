@@ -1,0 +1,5 @@
+/* work.chiero.jp の中のページ：見出しの書体を Noto Sans JP Bold に（2026-10-03 本人の決定。公式サイトのトップに合わせる）。
+   見出しの字だけを切り出した Webフォント（SIL OFL 1.1）。書体のファイルは、相談の総合入口と同じ物。 */
+@font-face{font-family:"CHIERO Sans";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/chiero-sans-700-work.woff2?v=00a3067c7b21) format("woff2")}
+html[lang="ja"] body :is(h1,h2,h3){font-family:"CHIERO Sans",Arial,"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+html[lang="ja"] .fluid-mode .fluid-page-hero h1{font-family:"CHIERO Sans",Arial,"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
