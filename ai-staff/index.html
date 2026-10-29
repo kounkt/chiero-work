@@ -321,7 +321,7 @@ footer .c{margin-top:10px}
         <p class="price">5,000<small>円（税込）</small></p>
         <p class="pay">1回のお支払い</p>
         <ul><li>質問票（12問）に文字で回答</li><li>3営業日以内に「改善案1枚」：自動にできる事務の候補3つ・仕組み・概算の費用・<span class="nw">最初の1つ</span></li></ul>
-        <a class="btn" href="#" data-pay="diag">診断を申し込む<small>5,000円・単発</small></a>
+        <a class="btn" href="https://univa.cc/y30YDk" target="_blank" rel="noopener" data-pay="diag">診断を申し込む<small>5,000円・単発</small></a>
         <p class="pending-msg" role="status"></p>
       </div>
       <div class="plan reveal">
@@ -330,7 +330,7 @@ footer .c{margin-top:10px}
         <p class="price">30,000<small>円〜（税込）</small></p>
         <p class="pay">1回のお支払い。範囲を超える時は事前に税込総額を提示</p>
         <ul><li>事務1つを動く道具にして納品（手順書・試験の結果つき）</li><li>仕様を文字で確かめてから7営業日以内</li><li>納品から14日間の<span class="nw">不具合の修正</span></li></ul>
-        <a class="btn" href="#" data-pay="build">自動化を1つ頼む<small>30,000円・単発</small></a>
+        <a class="btn" href="https://univa.cc/3ET3ep" target="_blank" rel="noopener" data-pay="build">自動化を1つ頼む<small>30,000円・単発</small></a>
         <p class="pending-msg" role="status"></p>
       </div>
       <div class="plan main reveal">
@@ -339,7 +339,7 @@ footer .c{margin-top:10px}
         <p class="price">30,000<small>円／月（税込）</small></p>
         <p class="pay">毎月、お申し込み日と同じ日に自動で課金。初月から・いつでも解約</p>
         <ul><li>事務1つを当社が毎月回す（受け取りから<span class="nw">1営業日以内に返却）</span></li><li>動きの見張りと不具合の修理</li><li>月1回の小さな改修1件と、<span class="nw">月1回の報告1枚</span></li><li>4つの型に合う事務は、初月の<span class="nw">組み込みを含む</span></li></ul>
-        <a class="btn" href="#" data-pay="monthly">運用代行を始める<small>月額30,000円・いつでも解約</small></a>
+        <a class="btn" href="https://univa.cc/WPy1_z" target="_blank" rel="noopener" data-pay="monthly">運用代行を始める<small>月額30,000円・いつでも解約</small></a>
         <p class="pending-msg" role="status"></p>
       </div>
     </div>
@@ -380,7 +380,7 @@ footer .c{margin-top:10px}
   <div class="wrap">
     <h2 id="h-cta"><span class="ln">来月の月末は、</span><span class="ln">朝の一覧から。</span></h2>
     <p class="sub">まず5,000円の診断で、自動にできる事務を3つお知らせします。</p>
-    <a class="btn" href="#" data-pay="diag">診断を申し込む（5,000円・税込）</a>
+    <a class="btn" href="https://univa.cc/y30YDk" target="_blank" rel="noopener" data-pay="diag">診断を申し込む（5,000円・税込）</a>
     <p class="pending-msg" role="status"></p>
     <p class="alt-link">先に聞きたい事は <a href="mailto:work@chiero.jp?subject=AI%E7%A4%BE%E5%93%A1%E3%81%AE%E9%81%8B%E7%94%A8%E4%BB%A3%E8%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">work@chiero.jp</a> へ</p>
   </div>
@@ -401,10 +401,10 @@ footer .c{margin-top:10px}
 <script>
 (function(){
   // 決済リンク：UnivaPay の URL が入るまでは「準備中」と出す（UNIVAPAY_LINKS.md）
-  var PAY = {diag: "", build: "", monthly: ""};
+  var PAY = {diag: "https://univa.cc/y30YDk", build: "https://univa.cc/3ET3ep", monthly: "https://univa.cc/WPy1_z"};
   document.querySelectorAll("[data-pay]").forEach(function(a){
     var url = PAY[a.getAttribute("data-pay")];
-    if (url) { a.href = url; a.rel = "noopener"; return; }
+    if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; return; }
     a.addEventListener("click", function(e){
       e.preventDefault();
       var m = a.parentNode.querySelector(".pending-msg");
