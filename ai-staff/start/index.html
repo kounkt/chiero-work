@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>質問票（AI社員の運用代行） | 株式会社CHIERO</title>
+<meta name="description" content="お支払いのあとの質問票。12問に文字で答えて、メールか公式LINEでお送りください。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://work.chiero.jp/ai-staff/start/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+:root{--red:#E60012;--red-d:#B8000E;--ink:#0E0E0E;--sub:#565656;--alt:#F7F6F3;--line:#E5E3DE;
+  --g:"Noto Sans JP","Hiragino Sans","Yu Gothic Medium",sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--g);color:var(--ink);background:#fff;font-size:16px;line-height:1.9;font-feature-settings:"palt" 1;line-break:strict;word-break:auto-phrase}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.ln{display:inline-block}
+.hd{border-bottom:1px solid var(--line)}
+.hd .wrap{height:60px;display:flex;align-items:center}
+.logo{color:var(--ink);font:900 20px/1 var(--g);letter-spacing:-.05em;text-decoration:none}
+.logo b{color:var(--red)}
+.head{padding:52px 0 40px;border-bottom:1px solid var(--line)}
+h1{font-weight:900;font-size:clamp(28px,7vw,40px);line-height:1.35}
+h1 .ln{display:block}
+.lead{margin-top:18px;font-size:16px;max-width:36em}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-weight:900;font-size:clamp(22px,5.4vw,28px);line-height:1.45}
+.note{font-size:14px;color:var(--sub);margin-top:10px}
+ol.q{margin-top:24px;padding-left:0;list-style:none;counter-reset:q}
+ol.q li{counter-increment:q;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line);font-size:16px}
+ol.q li::before{content:counter(q);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center}
+ol.q li small{display:block;font-size:14px;color:var(--sub)}
+.sendbox{display:grid;gap:12px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:12px 26px;border-radius:999px;background:var(--ink);color:#fff;
+  text-decoration:none;font-weight:700;font-size:16px;letter-spacing:.03em;border:0;cursor:pointer;font-family:inherit;text-align:center}
+.btn:hover{background:var(--red)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.copied{font-size:14px;min-height:1.9em}
+footer{padding:40px 0;font-size:14px;color:var(--sub);text-align:center}
+footer a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px;margin:0 10px}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="hd"><div class="wrap"><a class="logo" href="/ai-staff/">CHIER<b>O</b></a></div></header>
+<main>
+<div class="head"><div class="wrap">
+  <h1><span class="ln">次は、</span><span class="ln">12問の質問票です。</span></h1>
+  <p class="lead">お申し込みありがとうございます。下の12問に文字で答えて、メールか公式LINEでお送りください。分からない所は空けたままで結構です。届いた回答をもとに、診断は3営業日以内に改善案1枚を、自動化と運用代行は仕様1枚をお送りします。</p>
+</div></div>
+
+<section aria-labelledby="h-q"><div class="wrap">
+  <h2 id="h-q">質問票（12問）</h2>
+  <ol class="q" id="questions">
+    <li>会社名（屋号）と、ご担当の方のお名前<small>お申し込みの種類（診断／自動化1つ／運用代行）も書いてください</small></li>
+    <li>業種と、働いている人数</li>
+    <li>自動にしたい事務を1つ<small>例：取引先から届く請求書を、表に打ち込んで合計を確かめる</small></li>
+    <li>その事務の頻度と、1回あたりの件数<small>例：毎月、月末に約40通</small></li>
+    <li>今は誰が、何を使って、1回に何分ほどかけているか</li>
+    <li>元になる資料の形<small>PDF・紙・Excel・LINEのメッセージ・手書き など</small></li>
+    <li>できあがりの形<small>Excel・CSV・Googleスプレッドシート・LINEやメールの知らせ など</small></li>
+    <li>よく起きる間違いと、いつも確かめている所</li>
+    <li>使っている道具<small>会計ソフト・予約や勤怠のシステム・公式LINE など</small></li>
+    <li>外部のAIに送ってはいけない情報<small>利用者の個人情報・取引先の名前 など</small></li>
+    <li>お使いのパソコン（Mac か Windows）と、動かす場所の希望<small>当社が回す（運用代行）か、お手元で動かす（買い切り）か</small></li>
+    <li>ほかに気になっている事務（いくつでも）</li>
+  </ol>
+  <p class="note">見本の資料（2〜3件）があると、早く正確に作れます。個人情報や取引先の名前は、消すか架空の物に置き換えて添えてください。</p>
+</div></section>
+
+<section aria-labelledby="h-send"><div class="wrap">
+  <h2 id="h-send">回答の送り先</h2>
+  <div class="sendbox">
+    <button class="btn ghost" type="button" id="copy">12問をまとめてコピーする</button>
+    <p class="copied" id="copied" role="status"></p>
+    <a class="btn" href="mailto:work@chiero.jp?subject=%E3%80%90AI%E7%A4%BE%E5%93%A1%E3%80%91%E8%B3%AA%E5%95%8F%E7%A5%A8%E3%81%AE%E5%9B%9E%E7%AD%94">メールで送る（work@chiero.jp）</a>
+    <a class="btn" href="https://lin.ee/YCCoRsBu">公式LINEで送る</a>
+  </div>
+  <p class="note">LINEで送る時は、最初に「AI社員 質問票」と書いてください。決済の確認メールが届かない時は、迷惑メールのフォルダもご確認ください。条件は<a href="/ai-staff/tokushoho/">特定商取引法に基づく表記</a>のとおりです。</p>
+</div></section>
+</main>
+<footer><a href="/ai-staff/">AI社員の運用代行</a><a href="/ai-staff/tokushoho/">特定商取引法に基づく表記</a></footer>
+<script>
+document.getElementById("copy").addEventListener("click", function(){
+  var qs = Array.prototype.map.call(document.querySelectorAll("#questions li"), function(li, i){
+    return (i + 1) + ". " + li.firstChild.textContent.trim() + "\n→ ";
+  }).join("\n\n");
+  var text = "【AI社員】質問票の回答\n\n" + qs + "\n";
+  var done = function(ok){ document.getElementById("copied").textContent = ok ? "コピーしました。メールかLINEに貼り付けて、→ の後に答えを書いてください。" : "コピーできませんでした。上の12問を選んでコピーしてください。"; };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); }); else done(false);
+});
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3bd0c55b54044e909e20029c110432d1"}'></script>
+</body>
+</html>

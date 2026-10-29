@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI社員の運用代行｜小さな会社の請求書・シフト・期限管理を自動に｜株式会社CHIERO</title>
+<meta name="description" content="小さな会社の毎月の事務を、AI社員が1つずつ自動にして回し続けます。請求書のPDFを一覧に、週のシフトづくり、契約と在庫の期限の知らせ、音声メモの台帳。診断5,000円・自動化1つ30,000円〜・運用代行 月額30,000円（税込）。面談なし・いつでも解約。">
+<link rel="canonical" href="https://work.chiero.jp/ai-staff/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CHIERO">
+<meta property="og:title" content="月末の請求書づくりが、朝には終わっている。｜AI社員の運用代行">
+<meta property="og:description" content="小さな会社の毎月の事務を、AI社員が1つずつ自動にして回し続けます。診断5,000円から。面談なし・いつでも解約。">
+<meta property="og:url" content="https://work.chiero.jp/ai-staff/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --red:#E60012; --red-d:#B8000E; --ink:#0E0E0E; --sub:#565656; --faint:#8E8E8E;
+  --paper:#FFFFFF; --alt:#F7F6F3; --line:#E5E3DE;
+  --g:"Noto Sans JP","Hiragino Sans","Yu Gothic Medium",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--g);color:var(--ink);background:var(--paper);font-size:16px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1;line-break:strict;word-break:auto-phrase}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+.ln{display:inline-block}
+.nw{white-space:nowrap}
+.skip{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.skip:focus{width:auto;height:auto;clip-path:none;background:#fff;padding:8px;z-index:50}
+
+/* 頭 */
+.hd{border-bottom:1px solid var(--line);background:#fff}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{text-decoration:none;display:flex;align-items:baseline;gap:10px}
+.logo span{font:900 22px/1 var(--g);letter-spacing:-.05em}
+.logo b{color:var(--red)}
+.logo small{font-size:13px;color:var(--sub);letter-spacing:.04em}
+.hd nav a{font-size:14px;font-weight:500;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:44px}
+.hd nav a:hover{color:var(--red)}
+
+/* 最初の画面 */
+.hero{padding:56px 0 64px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:.04em}
+h1{font-weight:900;font-size:clamp(34px,8.6vw,62px);line-height:1.28;letter-spacing:.01em;margin-top:18px}
+h1 .ln{display:block}
+.hero .lead{margin-top:24px;font-size:17px;max-width:36em}
+.hero .lead b{font-weight:700}
+.proof{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--sub)}
+.proof li{list-style:none;padding-left:16px;position:relative}
+.proof li::before{content:"";position:absolute;left:0;top:.8em;width:8px;height:1px;background:var(--ink)}
+.actions{margin-top:32px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:60px;padding:14px 30px;border-radius:999px;
+  background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:.04em;transition:background .2s,transform .2s;text-align:center}
+.btn:hover{background:var(--red);transform:translateY(-1px)}
+.btn .arr{font-weight:400}
+.btn small{display:block;font-size:13px;font-weight:500;opacity:.85;letter-spacing:.02em}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.textlink{font-size:15px;font-weight:500;display:inline-flex;align-items:center;min-height:44px}
+
+/* 区画 */
+section{padding:84px 0;border-bottom:1px solid var(--line)}
+section.alt{background:var(--alt)}
+h2{font-weight:900;font-size:clamp(25px,5.8vw,36px);line-height:1.42;letter-spacing:.01em}
+h2::before{content:"";display:block;width:22px;height:2px;background:var(--red);margin-bottom:18px}
+.note{font-size:14px;color:var(--sub);margin-top:12px}
+.sec-lead{margin-top:18px;font-size:16px;color:var(--ink);max-width:38em}
+
+/* 4つの場面 */
+.scenes{margin-top:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.scene{border:1px solid var(--line);border-radius:4px;padding:24px 22px;background:#fff}
+.scene .tag{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:.06em}
+.scene h3{font-size:19px;font-weight:700;line-height:1.55;margin-top:6px}
+.scene p{font-size:15px;color:var(--sub);margin-top:10px}
+.scene p b{color:var(--ink);font-weight:700}
+
+/* 流れ */
+.flow{margin-top:40px;counter-reset:s;display:grid;gap:0}
+.step{counter-increment:s;position:relative;padding:0 0 32px 52px;border-left:1px solid var(--line);margin-left:15px}
+.step:last-child{border-left-color:transparent;padding-bottom:0}
+.step::before{content:counter(s);position:absolute;left:-16px;top:0;width:32px;height:32px;border-radius:50%;
+  background:var(--ink);color:#fff;font-size:14px;font-weight:700;display:grid;place-items:center}
+.step h3{font-size:18px;font-weight:700;line-height:1.6}
+.step p{font-size:15px;color:var(--sub);margin-top:4px}
+.split{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.split div{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px}
+.split h3{font-size:16px;font-weight:700}
+.split ul{margin-top:8px;padding-left:1.1em;font-size:15px;color:var(--sub)}
+
+/* 実物 */
+.sheet{margin-top:36px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.sheet-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 10px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:14px;color:var(--sub)}
+.sheet-head b{color:var(--ink);font-size:14px}
+.scroll{overflow-x:auto}
+table.data{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+table.data th,table.data td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+table.data th{background:var(--alt);font-weight:700;font-size:14px;color:var(--sub)}
+table.data td.n{text-align:right;font-feature-settings:"tnum"}
+table.data .flag{font-weight:700}
+.msg{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px 18px;font-size:14.5px;line-height:1.85}
+.msg .who{font-size:14px;color:var(--sub);font-weight:700}
+.msg p+p{margin-top:6px}
+.results{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.results div{background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px}
+.results b{display:block;font-size:16px}
+.results span{display:block;font-size:14px;color:var(--sub);margin-top:4px}
+
+/* 違い */
+.three{margin-top:36px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.three div{border-top:2px solid var(--ink);padding-top:16px}
+.three h3{font-size:17px;font-weight:700;line-height:1.6}
+.three p{font-size:15px;color:var(--sub);margin-top:6px}
+.facts{margin-top:40px;border:1px solid var(--line);border-radius:4px;padding:22px;display:grid;gap:10px;background:#fff}
+.facts p{font-size:15px}
+.facts .label{font-size:14px;color:var(--sub);font-weight:700;letter-spacing:.06em}
+
+/* 料金 */
+.plans{margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.plan{border:1px solid var(--line);border-radius:4px;padding:26px 22px;background:#fff;display:flex;flex-direction:column}
+.plan.main{border:2px solid var(--ink)}
+.plan .kind{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:.06em}
+.plan h3{font-size:20px;font-weight:900;line-height:1.5;margin-top:4px}
+.price{margin-top:14px;font-weight:900;font-size:34px;line-height:1.2;white-space:nowrap;font-feature-settings:"tnum"}
+.price small{font-size:14px;font-weight:700}
+.plan .pay{font-size:14px;color:var(--sub);margin-top:6px}
+.plan ul{margin:16px 0 22px;padding-left:1.1em;font-size:15px;flex:1}
+.plan ul li+li{margin-top:6px}
+.plan .btn{width:100%;padding:14px 18px;font-size:15.5px;flex-direction:column;gap:0}
+.pending-msg{display:none;margin-top:10px;font-size:14px;color:var(--ink);font-weight:500}
+.pending-msg.on{display:block}
+
+/* 条件の表 */
+dl.terms{margin-top:36px;border-top:1px solid var(--line)}
+.terms .row{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--line)}
+.terms dt{background:var(--alt);font-size:14px;font-weight:700;color:var(--sub);padding:16px}
+.terms dd{font-size:15px;padding:16px}
+.terms dd p+p{margin-top:6px}
+
+/* よくある質問 */
+.faq{margin-top:32px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:700;font-size:16px;position:relative;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"＋";position:absolute;right:4px;top:18px;font-weight:400}
+.faq details[open] summary::after{content:"－"}
+.faq .a{padding:0 0 20px;font-size:15px;color:var(--sub)}
+
+/* 最後 */
+.cta{background:var(--ink);color:#fff;text-align:center;border:0}
+.cta h2{color:#fff}
+.cta h2::before{display:none}
+.cta .sub{color:#C9C9C9;font-size:16px;margin-top:16px}
+.cta .btn{background:var(--red);border-radius:3px;margin-top:32px}
+.cta .btn:hover{background:var(--red-d)}
+.cta .alt-link{display:block;margin-top:18px;font-size:14px;color:#C9C9C9}
+.cta .alt-link a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
+
+footer{padding:40px 0 48px;font-size:14px;color:var(--sub);text-align:center}
+footer nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 20px}
+footer a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+footer a:hover{color:var(--red)}
+footer .c{margin-top:10px}
+
+/* 画面下の固定ボタン（最初の画面を過ぎてから） */
+.fixbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);
+  border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s}
+.fixbar.on{transform:none}
+.fixbar .btn{width:100%;min-height:52px;padding:10px 18px}
+@media(min-width:861px){.fixbar{display:none}}
+
+.js .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.js .reveal.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.js .reveal{opacity:1;transform:none}}
+
+@media(max-width:860px){
+  .plans{grid-template-columns:1fr}
+  .three{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .scenes,.results,.split{grid-template-columns:1fr}
+  section{padding:64px 0}
+  .hero{padding:40px 0 52px}
+  .hero .lead{font-size:16px}
+  .terms .row{grid-template-columns:1fr}
+  .terms dt{padding:12px 16px 4px;background:transparent;color:var(--ink)}
+  .terms dd{padding:0 16px 14px}
+  .logo small{display:none}
+  .actions .btn{width:100%}
+  body{padding-bottom:76px}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Service","name":"AI社員の運用代行","provider":{"@type":"Organization","name":"株式会社CHIERO","url":"https://chiero.jp/"},"areaServed":"JP","url":"https://work.chiero.jp/ai-staff/","offers":[{"@type":"Offer","name":"業務の自動化診断","price":"5000","priceCurrency":"JPY"},{"@type":"Offer","name":"業務の自動化 1つ","price":"30000","priceCurrency":"JPY"},{"@type":"Offer","name":"AI社員の運用代行（月額）","price":"30000","priceCurrency":"JPY"}]}
+</script>
+</head>
+<body>
+<script>document.documentElement.classList.add("js");document.body.classList.add("js")</script>
+<a class="skip" href="#main">本文へ</a>
+<header class="hd"><div class="wrap">
+  <a class="logo" href="https://chiero.jp/" aria-label="CHIERO 公式サイトへ"><span>CHIER<b>O</b></span><small>株式会社CHIERO</small></a>
+  <nav aria-label="このページ"><a href="#plans">料金</a></nav>
+</div></header>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wrap">
+    <p class="eyebrow">小さな会社の、AI社員の運用代行</p>
+    <h1 id="h1"><span class="ln">月末の請求書づくりが、</span><span class="ln">朝には終わっている。</span></h1>
+    <p class="lead"><b>毎月くり返す事務を、AI社員が1つずつ自動にして、当社が回し続けます。</b>夜のうちに請求書のPDFを送れば、翌朝には一覧になり、人が確かめる所にだけ印がついて届きます。</p>
+    <ul class="proof" aria-label="実績">
+      <li>AIを活用して、1日1時間で年商1億の事業を創出</li>
+      <li>クラウドワークスで、AI社員が案件を取り、納品まで：契約2件・納品2件・評価5.0（2026年10月）</li>
+    </ul>
+    <div class="actions">
+      <a class="btn" href="#plans">3つの始め方と料金を見る <span class="arr" aria-hidden="true">↓</span></a>
+      <a class="textlink" href="#proof">動く実物を先に見る</a>
+    </div>
+    <p class="note">診断5,000円から・面談なし（やり取りはメールか公式LINEの文字だけ）・運用代行はいつでも解約</p>
+  </div>
+</section>
+
+<section id="scenes" class="alt" aria-labelledby="h-scenes">
+  <div class="wrap">
+    <h2 id="h-scenes"><span class="ln">毎月の手作業が、</span><span class="ln">こう変わります。</span></h2>
+    <p class="sec-lead">当社の型は4つ。どれも「毎月・毎週、同じ形でくり返す事務」です。</p>
+    <div class="scenes">
+      <div class="scene reveal"><p class="tag">請求書</p><h3>届いたPDFが、翌朝には一覧に</h3><p>取引先の請求書や利用料の請求書を読み取り、表計算で開ける一覧にします。<b>税額が合わない・同じ請求書が二重に届いた</b>物にだけ印がつきます。</p></div>
+      <div class="scene reveal"><p class="tag">シフト・予定</p><h3>週の予定表が、重ならずに組み上がる</h3><p>勤務日・資格・移動の時間を守って割り当てます。<b>決められなかった1件には理由</b>がついて戻ります。手で組んだ表の重なりも見つけます。</p></div>
+      <div class="scene reveal"><p class="tag">期限</p><h3>契約の締切と発注日が、毎朝の知らせに</h3><p>解約の連絡の締切、在庫の発注日、使用期限を、<b>急ぐ順の一通</b>にして毎朝お送りします。カレンダーにも入ります。</p></div>
+      <div class="scene reveal"><p class="tag">音声メモ</p><h3>移動中に話したメモが、担当と期限つきの台帳に</h3><p>公式LINEに送った音声メモから、<b>決まった事・次の作業・保留</b>を取り出し、確認の返信が届きます。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" aria-labelledby="h-how">
+  <div class="wrap">
+    <h2 id="h-how"><span class="ln">AI社員が回し、</span><span class="ln">人は印の所だけを見る。</span></h2>
+    <div class="flow">
+      <div class="step reveal"><h3>受け取る</h3><p>メールか公式LINEで、請求書のPDF・予定の一覧・音声メモなどを送っていただきます。</p></div>
+      <div class="step reveal"><h3>AI社員が処理して、照合する</h3><p>決まった書式で読み取り、合計・税額・重なり・期限を確かめます。決まりは、お客様の事務に合わせて作ります。</p></div>
+      <div class="step reveal"><h3>人が確かめる所に印をつけて返す</h3><p>受け取りから1営業日以内に、一覧と「確かめてほしい数行」をお返しします。支払い・送信・契約の判断は、お客様が行います。</p></div>
+    </div>
+    <div class="split">
+      <div><h3>AI社員がやる事</h3><ul><li>読み取り・一覧づくり</li><li>計算と重なりの照合</li><li>期限の知らせ・返信の下書き</li></ul></div>
+      <div><h3>お客様がやる事</h3><ul><li>資料を送る</li><li>印のついた数行を確かめる</li><li>支払い・送信の最終の判断</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="proof" class="alt" aria-labelledby="h-proof">
+  <div class="wrap">
+    <h2 id="h-proof"><span class="ln">動く実物で、</span><span class="ln">先に確かめられます。</span></h2>
+    <p class="sec-lead">架空の請求書7通（一般4通・介護の利用料3通）を、当社の型で読み取った結果の抜粋です。わざと入れた誤り3つに、3つとも印がつきました。</p>
+    <div class="sheet reveal">
+      <div class="sheet-head"><b>確かめてほしい一覧（review.csv）</b><span>架空のデータ・2026年10月の試験</span></div>
+      <div class="scroll" data-scroll-x><table class="data">
+        <thead><tr><th>ファイル</th><th>印の理由</th></tr></thead>
+        <tbody>
+          <tr><td>general_03_lease</td><td class="flag">消費税が小計の10%（3,000円）と合わない（3,300円）</td></tr>
+          <tr><td>general_04_bungu</td><td class="flag">二重の可能性（general_01 と同じ番号・同じ金額）</td></tr>
+          <tr><td>kaigo_03</td><td class="flag">保険分＋保険外が合計請求額と合わない</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sheet reveal">
+      <div class="sheet-head"><b>一覧（invoices_general.csv の一部）</b><span>Excel で開ける形</span></div>
+      <div class="scroll" data-scroll-x><table class="data">
+        <thead><tr><th>発行元</th><th>請求書番号</th><th>支払期限</th><th>小計</th><th>消費税</th><th>合計</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>株式会社サンプル文具（架空）</td><td>INV-2026-1012</td><td>2026-11-30</td><td class="n">10,600</td><td class="n">1,060</td><td class="n">11,660</td><td>OK</td></tr>
+          <tr><td>まるいち弁当店（架空）</td><td>B-7781</td><td>2026-11-20</td><td class="n">10,800</td><td class="n">924</td><td class="n">11,724</td><td>OK</td></tr>
+          <tr><td>架空リース株式会社</td><td>LS-0458</td><td>2026-11-10</td><td class="n">30,000</td><td class="n">3,300</td><td class="n">33,300</td><td class="flag">要確認</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="msg reveal" aria-label="毎朝の知らせの見本">
+      <p class="who">毎朝の知らせの見本（期限の型・架空のデータ）</p>
+      <p>・清掃の委託：更新の手続きの締切。あと2日（10月31日）</p>
+      <p>・使い捨て手袋：今日、発注する。残り6箱・<span class="nw">届くまで5日</span></p>
+      <p>・アルコール消毒液：使用期限まであと22日</p>
+    </div>
+    <div class="results">
+      <div class="reveal"><b>請求書の型</b><span>7通を読み取り、誤り3つすべてに印</span></div>
+      <div class="reveal"><b>シフト・予定の型</b><span>依頼12件のうち11件を割り当て、残る1件に理由</span></div>
+      <div class="reveal"><b>期限の型</b><span>契約5件・在庫5品目から、知らせ7件を急ぐ順に</span></div>
+      <div class="reveal"><b>音声メモの型</b><span>メモ2本から、決定3・作業4・保留1を台帳に</span></div>
+    </div>
+    <p class="note">どれも架空のデータで動かした当社の試験です。お客様の事務での結果は、書式や量によって変わります。</p>
+  </div>
+</section>
+
+<section id="why" aria-labelledby="h-why">
+  <div class="wrap">
+    <h2 id="h-why"><span class="ln">小さく始めて、</span><span class="ln">合えば続けられます。</span></h2>
+    <div class="three">
+      <div class="reveal"><h3>文字のやり取りだけ</h3><p>面談や電話はありません。質問票に答え、資料を送るだけで進みます。</p></div>
+      <div class="reveal"><h3>初月から、いつでも解約</h3><p>運用代行は最低の契約期間がありません。次の課金日の前日までのご連絡で止まります。</p></div>
+      <div class="reveal"><h3>作る前に、税込総額</h3><p>30,000円の範囲を超える時は、作り始める前に追加の税込総額を文字でお示しします。</p></div>
+    </div>
+    <div class="facts">
+      <p class="label">運営</p>
+      <p>株式会社CHIERO（福岡）。AIを活用して、1日1時間で年商1億の事業を創出。社内では、営業・制作・点検をAI社員が分担して回しています。</p>
+    </div>
+  </div>
+</section>
+
+<section id="plans" class="alt" aria-labelledby="h-plans">
+  <div class="wrap">
+    <h2 id="h-plans"><span class="ln">始め方は3つ。</span><span class="ln">中心は月額の運用代行です。</span></h2>
+    <p class="sec-lead">どれも税込・カード払い（UnivaPay）。迷う時は、5,000円の診断から始めてください。</p>
+    <div class="plans">
+      <div class="plan reveal">
+        <p class="kind">まず知る・単発</p>
+        <h3>業務の自動化診断</h3>
+        <p class="price">5,000<small>円（税込）</small></p>
+        <p class="pay">1回のお支払い</p>
+        <ul><li>質問票（12問）に文字で回答</li><li>3営業日以内に「改善案1枚」：自動にできる事務の候補3つ・仕組み・概算の費用・<span class="nw">最初の1つ</span></li></ul>
+        <a class="btn" href="#" data-pay="diag">診断を申し込む<small>5,000円・単発</small></a>
+        <p class="pending-msg" role="status"></p>
+      </div>
+      <div class="plan reveal">
+        <p class="kind">1つ作る・単発</p>
+        <h3>業務の自動化 1つ</h3>
+        <p class="price">30,000<small>円〜（税込）</small></p>
+        <p class="pay">1回のお支払い。範囲を超える時は事前に税込総額を提示</p>
+        <ul><li>事務1つを動く道具にして納品（手順書・試験の結果つき）</li><li>仕様を文字で確かめてから7営業日以内</li><li>納品から14日間の<span class="nw">不具合の修正</span></li></ul>
+        <a class="btn" href="#" data-pay="build">自動化を1つ頼む<small>30,000円・単発</small></a>
+        <p class="pending-msg" role="status"></p>
+      </div>
+      <div class="plan main reveal">
+        <p class="kind">回し続ける・月額</p>
+        <h3>AI社員の運用代行</h3>
+        <p class="price">30,000<small>円／月（税込）</small></p>
+        <p class="pay">毎月、お申し込み日と同じ日に自動で課金。初月から・いつでも解約</p>
+        <ul><li>事務1つを当社が毎月回す（受け取りから<span class="nw">1営業日以内に返却）</span></li><li>動きの見張りと不具合の修理</li><li>月1回の小さな改修1件と、<span class="nw">月1回の報告1枚</span></li><li>4つの型に合う事務は、初月の<span class="nw">組み込みを含む</span></li></ul>
+        <a class="btn" href="#" data-pay="monthly">運用代行を始める<small>月額30,000円・いつでも解約</small></a>
+        <p class="pending-msg" role="status"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="terms" aria-labelledby="h-terms">
+  <div class="wrap">
+    <h2 id="h-terms"><span class="ln">お申し込みの前に、</span><span class="ln">条件をご確認ください。</span></h2>
+    <dl class="terms">
+      <div class="row"><dt>価格（税込）</dt><dd><p>業務の自動化診断：5,000円／業務の自動化 1つ：30,000円〜／AI社員の運用代行：月額30,000円</p></dd></div>
+      <div class="row"><dt>お支払い</dt><dd><p>クレジットカード（UnivaPay）。診断と自動化は、お申し込み時に1回。運用代行は、お申し込み時に初月分、以後は毎月同じ日に自動で課金します。</p></dd></div>
+      <div class="row"><dt>30,000円の範囲</dt><dd><p>事務1つ・入力1種類・出力1種類・確かめる決まり10個まで。超える時は作り始める前に追加の税込総額を文字でお示しし、合意した時だけ追加でお支払いいただきます。合意されない時は、30,000円の範囲で作るか、全額返金かをお選びいただけます。</p></dd></div>
+      <div class="row"><dt>届く時期</dt><dd><p>診断：質問票の回答を受け取ってから3営業日以内。自動化：仕様を文字で確かめ合ってから7営業日以内。運用代行：資料を受け取ってから1営業日以内に返却（組み込みは最初の7営業日以内）。</p></dd></div>
+      <div class="row"><dt>解約</dt><dd><p>運用代行は、次の課金日の前日までにメールか公式LINEでご連絡いただくと、次の課金から止まります。最低の契約期間はありません。</p></dd></div>
+      <div class="row"><dt>返金</dt><dd><p>診断：質問票の回答を受け取る前なら全額返金。自動化：仕様を確かめ合う前なら全額返金。運用代行：日割りの返金はありません（課金済みの月は、その月の終わりまでお使いいただけます）。当社の都合で提供できない時は、未提供分を返金します。</p></dd></div>
+      <div class="row"><dt>扱わない事</dt><dd><p>弁護士・税理士・社会保険労務士・行政書士など資格者だけが行える業務、お客様の口座やカードの操作。AIが行うのは読み取り・照合・下書きまでで、最終の判断はお客様が行います。</p></dd></div>
+    </dl>
+    <p class="note">詳しくは <a href="/ai-staff/tokushoho/">特定商取引法に基づく表記（AI社員の運用代行）</a> をご覧ください。</p>
+  </div>
+</section>
+
+<section id="faq" class="alt" aria-labelledby="h-faq">
+  <div class="wrap">
+    <h2 id="h-faq">よくある質問</h2>
+    <div class="faq">
+      <details><summary>パソコンに詳しい人がいなくても使えますか。</summary><p class="a">使えます。運用代行では当社の環境で回すので、お客様は資料をメールか公式LINEで送るだけです。自動化1つを買い切る場合は、お使いのパソコン（Mac か Windows）で動かす手順書をお付けします。</p></details>
+      <details><summary>どんな事務なら頼めますか。</summary><p class="a">毎月・毎週、同じ形でくり返す事務です。請求書の読み取り、シフト・予定づくり、契約と在庫の期限の知らせ、音声メモの台帳が当社の型です。型に無い事務も、診断で自動にできるかをお答えします。</p></details>
+      <details><summary>会社の情報はどう扱われますか。</summary><p class="a">その事務に要る分だけをお預かりします。外部のAIに送る範囲は、作る前に文字でお示しします。必要なら、先に守秘の取り決めを交わします。</p></details>
+      <details><summary>面談や打ち合わせはありますか。</summary><p class="a">ありません。やり取りはメールか公式LINEの文字だけです。質問票と見本の資料で仕様をまとめ、文字で確かめていただきます。</p></details>
+      <details><summary>運用代行は、何か月続ける必要がありますか。</summary><p class="a">最低の契約期間はありません。初月だけでも使えます。次の課金日の前日までにご連絡いただくと、次の課金から止まります。</p></details>
+      <details><summary>お支払いのあとは、何をすればよいですか。</summary><p class="a">決済の後に表示されるページから質問票を開き、メールか公式LINEで回答をお送りください。決済の確認メールも届きます。</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="h-cta">
+  <div class="wrap">
+    <h2 id="h-cta"><span class="ln">来月の月末は、</span><span class="ln">朝の一覧から。</span></h2>
+    <p class="sub">まず5,000円の診断で、自動にできる事務を3つお知らせします。</p>
+    <a class="btn" href="#" data-pay="diag">診断を申し込む（5,000円・税込）</a>
+    <p class="pending-msg" role="status"></p>
+    <p class="alt-link">先に聞きたい事は <a href="mailto:work@chiero.jp?subject=AI%E7%A4%BE%E5%93%A1%E3%81%AE%E9%81%8B%E7%94%A8%E4%BB%A3%E8%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">work@chiero.jp</a> へ</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <nav aria-label="フッター">
+    <a href="https://chiero.jp/">公式サイト</a>
+    <a href="/ai-staff/tokushoho/">特定商取引法に基づく表記</a>
+    <a href="https://chiero.jp/privacy/">プライバシーポリシー</a>
+  </nav>
+  <p class="c">© 株式会社CHIERO</p>
+</footer>
+
+<div class="fixbar" aria-hidden="true"><a class="btn" href="#plans" tabindex="-1">3つの始め方と料金を見る</a></div>
+
+<script>
+(function(){
+  // 決済リンク：UnivaPay の URL が入るまでは「準備中」と出す（UNIVAPAY_LINKS.md）
+  var PAY = {diag: "", build: "", monthly: ""};
+  document.querySelectorAll("[data-pay]").forEach(function(a){
+    var url = PAY[a.getAttribute("data-pay")];
+    if (url) { a.href = url; a.rel = "noopener"; return; }
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      var m = a.parentNode.querySelector(".pending-msg");
+      if (m) { m.textContent = "お支払いの窓口を準備しています。お急ぎの方は work@chiero.jp へご連絡ください。"; m.classList.add("on"); }
+    });
+  });
+  // 出てくる動き（JS が無くても本文は全部読める・1.8秒の保険）
+  var els = document.querySelectorAll(".reveal");
+  var show = function(){ els.forEach(function(e){ e.classList.add("on"); }); };
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(x){ if (x.isIntersecting) { x.target.classList.add("on"); io.unobserve(x.target); } }); }, {rootMargin: "0px 0px -8% 0px"});
+    els.forEach(function(e){ io.observe(e); });
+  } else { show(); }
+  setTimeout(show, 1800);
+  // 固定ボタン：最初の画面を過ぎてから、料金の区画では隠す
+  var bar = document.querySelector(".fixbar"), hero = document.getElementById("top"), plans = document.getElementById("plans");
+  var tick = function(){
+    var past = hero.getBoundingClientRect().bottom < 0;
+    var r = plans.getBoundingClientRect(), inPlans = r.top < innerHeight && r.bottom > 0;
+    bar.classList.toggle("on", past && !inPlans);
+  };
+  addEventListener("scroll", tick, {passive: true}); tick();
+})();
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3bd0c55b54044e909e20029c110432d1"}'></script>
+</body>
+</html>
